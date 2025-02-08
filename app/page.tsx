@@ -1,18 +1,13 @@
 "use client";
-
 import axios from "axios";
-import Footer from "./Footer";
+import { useState, useEffect } from "react";
+//import RefreshReadAcessToken from "../api/refreshToken";
+import Footer from "./components/Footer";
 
 export default function Home() {
-  {
-    /* const rooms = await prisma.room.findMany({
-    orderBy: { roomNum: 'asc' }
-  });
+  //const [accessToken, setAccessToken] = useState(null);
 
-  const patients = await prisma.patient.findMany({
-    orderBy: { id: 'asc' }
-  }); */
-  }
+  const [activities, SetActivities] = useState(null);
 
   const getAllActivities = async () => {
     try {
@@ -25,14 +20,30 @@ export default function Home() {
         }
       );
       console.log(response.data);
+
+      SetActivities(response.data);
+      console.log("ACTIVITIES", activities);
     } catch (err) {
       console.error("Error refreshing access token:", err);
+    }
+  };
+
+  const refreshAccessToken = async () => {
+    try {
+      const response = await axios.post("/api/refreshToken", {
+        refreshToken: "9fe778c7041af7cc6d2c640b4658a5e8b631dbff",
+      });
+      console.log(response.data.access_token);
+    } catch (error) {
+      console.error("Error refreshing the access token:", error);
+      throw new Error("Unable to refresh access token");
     }
   };
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <button onClick={getAllActivities}>Get Activities</button>
+      <button onClick={refreshAccessToken}>Refresh</button>
       <Footer />
     </div>
   );
@@ -46,3 +57,6 @@ export default function Home() {
 //     console.log(res);
 //   });
 // }
+
+//post
+//https://www.strava.com/oauth/token?client_id=147249&client_secret=a47591e64c23e07f2969edfef02031ec635b539d&refresh_token=9fe778c7041af7cc6d2c640b4658a5e8b631dbff&grant_type=refresh_token
