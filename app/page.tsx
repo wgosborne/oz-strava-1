@@ -62,19 +62,17 @@ export default function Home() {
       {/* <button onClick={refreshAccessToken}>Refresh</button> */}
       {activities.length > 0 ? (
         <div
-          className="w-full flex justify-center items-center"
-          style={{ height: "70vh" }}
+          className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center"
         >
-          {/* <Map
+          <Map
             lat={activities[0].start_latlng[0] || 51.505} // Use first activity's lat/lng
             lng={activities[0].start_latlng[1] || -0.09} // Use first activity's lng
             zoom={13} // Default zoom level
-          /> */}
+          />
         </div>
       ) : (
         <p>Loading activities...</p>
       )}
-      <Map lat={51.505} lng={-0.09} zoom={50} />
       <Footer />
     </div>
   );

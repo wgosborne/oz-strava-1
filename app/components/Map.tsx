@@ -15,7 +15,7 @@ const Map = ({ lat, lng, zoom }: Props) => {
   const position = new LatLng(lat, lng);
   //const position = new LatLng(lat, lng);
 
-  const mapStyle = { height: "400px", width: "100%" }
+  const mapStyle = { height: "750px", width: "100%" };
 
   return (
     <MapContainer
@@ -23,6 +23,7 @@ const Map = ({ lat, lng, zoom }: Props) => {
       zoom={zoom}
       scrollWheelZoom={false}
       style={mapStyle}
+      className="mt-7"
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
