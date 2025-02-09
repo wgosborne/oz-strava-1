@@ -12,7 +12,7 @@ export const NavBar = () => {
 
   const links = [
     { label: "Dashboard", href: "/" },
-    { label: "Issues", href: "/issues" },
+    { label: "Map", href: "/map" },
   ];
 
   return (
