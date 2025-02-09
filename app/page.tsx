@@ -1,29 +1,19 @@
 "use client";
-import axios from "axios";
+
 import { useState, useEffect, useMemo } from "react";
 //import RefreshReadAcessToken from "../api/refreshToken";
+import { useStore } from "./store/store";
 import Footer from "./components/Footer";
 import dynamic from "next/dynamic";
 import { getAllActivities } from "./actions/getActivities";
 
 export default function Home() {
-  //const [accessToken, setAccessToken] = useState(null);
-
-  const [activities, SetActivities] = useState([]); //<Activity[]>([]);
+  // Access the state and actions from the store
+  const { activities, isLoading, error, fetchActivities } = useStore();
 
   useEffect(() => {
-    const getActivities = async () => {
-      try {
-        const thisActivities = await getAllActivities("banama");
-        SetActivities(thisActivities);
-      } catch (error) {
-        console.error("Error refreshing the access token:", error);
-        throw new Error("Unable to refresh access token");
-      }
-    };
-
-    getActivities();
-  }, []);
+    fetchActivities();
+  }, [fetchActivities]);
 
   const Map = useMemo(
     () =>
@@ -37,6 +27,14 @@ export default function Home() {
   useEffect(() => {
     console.log("ACTIVITIES", activities);
   });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -52,7 +50,6 @@ export default function Home() {
       ) : (
         <p>Loading activities...</p>
       )}
-      <Footer />
     </div>
   );
 }

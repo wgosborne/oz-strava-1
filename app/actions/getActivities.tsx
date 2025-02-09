@@ -1,7 +1,7 @@
 import axios from "axios";
 import { refreshAccessToken } from "./refreshToken";
 
-export const getAllActivities = async (refresh_token: string) => {
+export const getAllActivities = async () => {
   try {
     const access_token = await refreshAccessToken();
 

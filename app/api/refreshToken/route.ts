@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // /app/api/refreshToken/route.ts
 import axios from 'axios';
 import { NextResponse } from 'next/server';
