@@ -61,13 +61,10 @@ export default function Home() {
       {/* <button onClick={getAllActivities}>Get Activities</button> */}
       {/* <button onClick={refreshAccessToken}>Refresh</button> */}
       {activities.length > 0 ? (
-        <div
-          className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center"
-        >
+        <div className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center">
           <Map
-            lat={activities[0].start_latlng[0] || 51.505} // Use first activity's lat/lng
-            lng={activities[0].start_latlng[1] || -0.09} // Use first activity's lng
             zoom={13} // Default zoom level
+            activities={activities}
           />
         </div>
       ) : (
