@@ -4,6 +4,16 @@ import { getAllActivities } from "../actions/getActivities";
 
 // Define the store
 export const useStore = create((set) => ({
+  
+  theme: localStorage.getItem('theme') || 'light', // Load from localStorage
+  toggleTheme: () => {
+    set((state) => {
+      const newTheme = state.theme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', newTheme); // Save to localStorage
+      return { theme: newTheme };
+    });
+  },
+
   accessToken: null, // will hold the access token
   activities: [], // will hold the activities
   isLoading: false, // loading state
