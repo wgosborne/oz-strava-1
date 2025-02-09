@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useStore } from "../store/store";
 import dynamic from "next/dynamic";
+import Footer from "../components/Footer";
 
 export default function Page() {
   // Access the state and actions from the store
@@ -22,7 +23,7 @@ export default function Page() {
   });
 
   return (
-    <div>
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       {activities.length > 0 ? (
         <div className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center">
           <Map
@@ -33,7 +34,7 @@ export default function Page() {
       ) : (
         <p>Loading activities...</p>
       )}
+      <Footer />
     </div>
   );
-};
-
+}

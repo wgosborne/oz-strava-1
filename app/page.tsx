@@ -50,6 +50,7 @@ export default function Home() {
       ) : (
         <p>Loading activities...</p>
       )}
+      <Footer />
     </div>
   );
 }
