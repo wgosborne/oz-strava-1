@@ -5,7 +5,6 @@ import { useState, useEffect, useMemo } from "react";
 import { useStore } from "./store/store";
 import Footer from "./components/Footer";
 import dynamic from "next/dynamic";
-import { getAllActivities } from "./actions/getActivities";
 
 export default function Home() {
   // Access the state and actions from the store
@@ -38,8 +37,6 @@ export default function Home() {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      {/* <button onClick={getAllActivities}>Get Activities</button> */}
-      {/* <button onClick={refreshAccessToken}>Refresh</button> */}
       {activities.length > 0 ? (
         <div className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center">
           <Map
@@ -48,7 +45,9 @@ export default function Home() {
           />
         </div>
       ) : (
-        <p>Loading activities...</p>
+        <div className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center">
+          <p>Loading...</p>
+        </div>
       )}
       <Footer />
     </div>

@@ -18,6 +18,8 @@ export const NavBar = () => {
 
   const { theme, toggleTheme } = useStore(); // Get the current theme and toggle function
 
+  console.log(theme);
+
   // Update the body data-theme attribute whenever theme changes
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);
@@ -29,19 +31,29 @@ export const NavBar = () => {
         <MdBugReport />
       </Link>
       <ul className="flex space-x-6 flex-grow">
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            className={classNames({
-              "text-zinc-900": link.href === currPath,
-              "text-zinc-500": link.href !== currPath,
-              "hover:text-zinc-800 transition-colors": true,
-            })}
-            href={link.href}
-          >
-            {link.label}
-          </Link>
-        ))}
+        {links.map((link) => {
+          return (
+            <Link
+              key={link.href}
+              className={
+                theme === "dark"
+                  ? classNames({
+                      "text-zinc-900": link.href === currPath,
+                      "text-neutral-600": link.href !== currPath,
+                      "hover:text-red-800 transition-colors": true,
+                    })
+                  : classNames({
+                      "text-white": link.href === currPath,
+                      "text-zinc-500": link.href !== currPath,
+                      "hover:text-rose-800 transition-colors": true,
+                    })
+              }
+              href={link.href}
+            >
+              {link.label}
+            </Link>
+          );
+        })}
       </ul>
       <div className="ml-auto">
         <button onClick={toggleTheme}>Toggle Theme</button>

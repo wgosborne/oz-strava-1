@@ -21,6 +21,14 @@
   --background: #ffffff;
 }
 
+[data-theme='dark'] p {
+  color: black;
+}
+
+[data-theme='dark'] a {
+  color: black;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
