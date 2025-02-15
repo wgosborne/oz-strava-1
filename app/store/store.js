@@ -4,12 +4,11 @@ import { getAllActivities } from "../actions/getActivities";
 
 // Define the store
 export const useStore = create((set) => ({
-  
-  theme: localStorage.getItem('theme') || 'light', // Load from localStorage
+  theme: localStorage.getItem("theme") || "light", // Load from localStorage
   toggleTheme: () => {
     set((state) => {
-      const newTheme = state.theme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', newTheme); // Save to localStorage
+      const newTheme = state.theme === "light" ? "dark" : "light";
+      localStorage.setItem("theme", newTheme); // Save to localStorage
       return { theme: newTheme };
     });
   },
@@ -18,6 +17,7 @@ export const useStore = create((set) => ({
   activities: [], // will hold the activities
   isLoading: false, // loading state
   error: null, // to track any errors
+  totalDistance: 0,
 
   // Action to set the access token
   //setAccessToken: (token) => set({ accessToken: token }),
@@ -36,10 +36,29 @@ export const useStore = create((set) => ({
       const newActivities = await getAllActivities();
 
       // Set the activities data
-      set({ activities: newActivities, isLoading: false });
+      set({ activities: newActivities });
+
+      var thisTotalDistance = 0;
+
+      newActivities.map((act) => {
+        thisTotalDistance += act.distance;
+      });
+      set({
+        totalDistance: thisTotalDistance.toFixed(2),
+        isLoading: false,
+      });
     } catch (err) {
       // Handle any errors
       set({ isLoading: false, error: err.message });
     }
   },
+
+  // fetchTotalDistance: (activities) => {
+  //   set({ isLoading: true, error: null }); // Start loading and clear any previous errors
+
+  //   newActivities.map((act) => {
+  //     totalDistance += act.distance;
+  //   });
+  //   set({ activities: newActivities, isLoading: false });
+  // },
 }));

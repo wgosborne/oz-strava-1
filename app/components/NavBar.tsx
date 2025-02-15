@@ -14,6 +14,8 @@ export const NavBar = () => {
   const links = [
     { label: "Dashboard", href: "/" },
     { label: "Map", href: "/map" },
+    { label: "Stats", href: "/stats" },
+    { label: "Analyze my Kudos", href: "/sentiment" },
   ];
 
   const { theme, toggleTheme } = useStore(); // Get the current theme and toggle function
