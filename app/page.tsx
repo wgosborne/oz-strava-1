@@ -23,15 +23,6 @@ export default function Home() {
     //fetchTotalDistance();
   }, [fetchActivities]);
 
-  const Map = useMemo(
-    () =>
-      dynamic(() => import("./components/Map"), {
-        loading: () => <p>A map is loading</p>,
-        ssr: false,
-      }),
-    []
-  );
-
   useEffect(() => {
     console.log("ACTIVITIES", activities);
   });
