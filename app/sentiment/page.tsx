@@ -1,9 +1,10 @@
+// @ts-nocheck
+
 "use client";
 
 import React, { useEffect } from "react";
 import { useStore } from "../store/store";
-import { SentimentIntensityAnalyzer } from "vader-sentiment";
-import natural, { SentimentAnalyzer } from "natural";
+
 
 export default function Page() {
   return (

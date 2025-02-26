@@ -24,7 +24,7 @@ export const NavBar = () => {
 
   // Update the body data-theme attribute whenever theme changes
   useEffect(() => {
-    document.body.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   return (
