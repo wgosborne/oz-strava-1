@@ -11,6 +11,9 @@ import { useStore } from "../store/store";
 import Sentiment from "sentiment";
 
 export default function Page() {
+  const { activities, isLoading, error, fetchActivities, totalDistance } =
+    useStore();
+
   const getSentiment = (str: string) => {
     //add spell check and stop word check?
 
@@ -35,29 +38,3 @@ export default function Page() {
     </div>
   );
 }
-
-// export default function Page() {
-//   //get distance
-//   const { activities, isLoading, error, fetchActivities, totalDistance } =
-//     useStore();
-
-//   const analyzeSentiment = (text: string) => {
-//     const analyzer = new SentimentAnalyzer("English", undefined, "senticon");
-//     const score = analyzer.getSentiment(text.split(" "));
-//     return score >= 0 ? "Positive" : score < 0 ? "Negative" : "Neutral";
-//   };
-
-//   useEffect(() => {
-//     console.log("DISTANCE", totalDistance);
-//   });
-
-//   const sampleText = "This is an amazing day!";
-//   const sentiment = analyzeSentiment(sampleText);
-
-//   return (
-//     <div>
-//       <h2>Sentiment Analysis</h2>
-//       <p>Positive: {sentiment}</p>
-//     </div>
-//   );
-// }

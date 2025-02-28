@@ -18,6 +18,7 @@ export const useStore = create((set) => ({
   isLoading: false, // loading state
   error: null, // to track any errors
   totalDistance: 0,
+  chartData: [],
 
   // Action to set the access token
   //setAccessToken: (token) => set({ accessToken: token }),
@@ -61,4 +62,20 @@ export const useStore = create((set) => ({
   //   });
   //   set({ activities: newActivities, isLoading: false });
   // },
+  fetchChartData: (activities) => {
+    set({ isLoading: true, error: null }); // Start loading and clear any previous errors
+
+    let newChartData = [];
+
+    activities.map((activity) => {
+      const currObj = {
+        title: activity.name,
+        distance: activity.distance * 0.000621371,
+      };
+
+      newChartData.push(currObj);
+
+      set({ chartData: newChartData, isLoading: false });
+    });
+  },
 }));
