@@ -1,6 +1,7 @@
 // store.js (or zustandStore.js)
 import { create } from "zustand";
 import { getAllActivities } from "../actions/getActivities";
+import
 
 // Define the store
 export const useStore = create((set) => ({
@@ -19,12 +20,43 @@ export const useStore = create((set) => ({
   error: null, // to track any errors
   totalDistance: 0,
   chartData: [],
+  comments: [],
 
   // Action to set the access token
   //setAccessToken: (token) => set({ accessToken: token }),
 
   // Action to fetch activities
   fetchActivities: async (refreshToken) => {
+    set({ isLoading: true, error: null }); // Start loading and clear any previous errors
+    try {
+      // Wait for the refreshed access token
+      //   const token = await refreshToken();
+
+      //   // Set the access token in the store
+      //   set({ accessToken: token });
+
+      // Fetch activities using the token
+      const newActivities = await getAllActivities();
+
+      // Set the activities data
+      set({ activities: newActivities });
+
+      var thisTotalDistance = 0;
+
+      newActivities.map((act) => {
+        thisTotalDistance += act.distance;
+      });
+      set({
+        totalDistance: thisTotalDistance.toFixed(2),
+        isLoading: false,
+      });
+    } catch (err) {
+      // Handle any errors
+      set({ isLoading: false, error: err.message });
+    }
+  },
+
+  fetchComments: async (refreshToken) => {
     set({ isLoading: true, error: null }); // Start loading and clear any previous errors
     try {
       // Wait for the refreshed access token
