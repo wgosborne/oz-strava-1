@@ -75,7 +75,7 @@ export default function Page() {
         <div className="flex justify-center items-center">
           <ChartContainer
             config={chartConfig}
-            className="max-h-[700px] max-w-[1800px] min-h-[700px] min-w-[1800px]"
+            className="max-h-[700px] max-w-[1600px] min-h-[700px] min-w-[1400px]"
           >
             <BarChart accessibilityLayer data={chartData}>
               <CartesianGrid vertical={false} />

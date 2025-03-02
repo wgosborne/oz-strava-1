@@ -78,6 +78,9 @@ const Map = ({ zoom, activities }: Props) => {
       zoom={zoom}
       scrollWheelZoom={true}
       style={mapStyle}
+      zoomDelta={1}
+      wheelPxPerZoomLevel={60}
+      zoomSnap={0.25}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
