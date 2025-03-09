@@ -1,7 +1,7 @@
 // store.js (or zustandStore.js)
 import { create } from "zustand";
 import { getAllActivities } from "../actions/getActivities";
-import
+import { getAllComments } from "../actions/getComments";
 
 // Define the store
 export const useStore = create((set) => ({
@@ -66,18 +66,12 @@ export const useStore = create((set) => ({
       //   set({ accessToken: token });
 
       // Fetch activities using the token
-      const newActivities = await getAllActivities();
+      const newComments = await getAllComments();
 
       // Set the activities data
-      set({ activities: newActivities });
+      set({ comments: newComments });
 
-      var thisTotalDistance = 0;
-
-      newActivities.map((act) => {
-        thisTotalDistance += act.distance;
-      });
       set({
-        totalDistance: thisTotalDistance.toFixed(2),
         isLoading: false,
       });
     } catch (err) {

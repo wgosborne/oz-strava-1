@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
 "use client";
@@ -11,11 +12,20 @@ import { useStore } from "../store/store";
 import Sentiment from "sentiment";
 
 export default function Page() {
-  const { activities, isLoading, error, fetchActivities, totalDistance } =
-    useStore();
+  const { activities, isLoading, error, fetchComments, comments } = useStore();
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
+
+  useEffect(() => {
+    console.log("COMMENTS", comments);
+  });
 
   const getSentiment = (str: string) => {
     //add spell check and stop word check?
+
+    console.log(comments);
 
     const sentiment = new Sentiment();
 
