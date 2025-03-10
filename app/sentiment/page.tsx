@@ -14,13 +14,6 @@ import Sentiment from "sentiment";
 export default function Page() {
   const { activities, isLoading, error, fetchComments, comments } = useStore();
 
-  useEffect(() => {
-    fetchComments();
-  }, [fetchComments]);
-
-  useEffect(() => {
-    console.log("COMMENTS", comments);
-  });
 
   const getSentiment = (str: string) => {
     //add spell check and stop word check?
