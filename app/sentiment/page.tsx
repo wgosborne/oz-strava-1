@@ -20,6 +20,8 @@ export default function Page() {
     comments,
     quotes,
     fetchQuotes,
+    tweets,
+    fetchTweets,
   } = useStore();
 
   // const getSentiment = (str: string) => {
@@ -44,11 +46,13 @@ export default function Page() {
 
   useEffect(() => {
     fetchQuotes();
+    fetchTweets();
     //fetchTotalDistance();
-  }, [fetchQuotes]);
+  }, [fetchQuotes, fetchTweets]);
 
   useEffect(() => {
     console.log("QUOTES", quotes);
+    console.log("Tweets", tweets);
   });
 
   return (
