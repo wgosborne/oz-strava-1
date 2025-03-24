@@ -2,62 +2,74 @@
 // @ts-nocheck
 
 "use client";
-import { WordTokenizer } from "natural";
-import aposToLexForm from "apos-to-lex-form";
-import SpellCorrector from "spelling-corrector";
-import stopword from "stopword";
+import { Badge } from "@/components/ui/badge";
+// import { WordTokenizer } from "natural";
+// import aposToLexForm from "apos-to-lex-form";
+// import SpellCorrector from "spelling-corrector";
+// import stopword from "stopword";
 import React, { useEffect } from "react";
 import { useStore } from "../store/store";
-import Sentiment from "sentiment";
-import axios from "axios";
+// import Sentiment from "sentiment";
+// import axios from "axios";
 
 export default function Page() {
-  const {
-    activities,
-    isLoading,
-    error,
-    fetchComments,
-    comments,
-    quotes,
-    fetchQuotes,
-    tweets,
-    fetchTweets,
-  } = useStore();
-
-  // const getSentiment = (str: string) => {
-  //   //add spell check and stop word check?
-
-  //   console.log(comments);
-
-  //   const sentiment = new Sentiment();
-
-  //   if (!str.trim()) {
-  //     return 0;
-  //   }
-
-  //   str = str.toLowerCase().replace(/[^a-zA-Z\s]+/g, "");
-
-  //   let result = sentiment.analyze(str);
-
-  //   console.log(result);
-  // };
-
-  // getSentiment("I love you");
+  const quotes = useStore((state) => state.quotes);
+  const fetchQuotes = useStore((state) => state.fetchQuotes);
+  const error = useStore((state) => state.error);
+  const isLoading = useStore((state) => state.isLoading);
 
   useEffect(() => {
     fetchQuotes();
-    fetchTweets();
-    //fetchTotalDistance();
-  }, [fetchQuotes, fetchTweets]);
+  }, [fetchQuotes]);
 
   useEffect(() => {
     console.log("QUOTES", quotes);
-    console.log("Tweets", tweets);
-  });
+  }, [quotes]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!quotes) {
+    return <div>Loading now...</div>; // Prevent rendering before data is available
+  }
 
   return (
     <div>
       <h2>Sentiment Analysis</h2>
+      {/* {quotesArray.map((quote) => (
+        <Badge key={quote.id}>{quote.quote}</Badge>
+      ))} */}
+
+      {quotes ? (
+        <Badge key={quotes.id}>{quotes.quote}</Badge>
+      ) : (
+        <Badge>NADA</Badge>
+      )}
     </div>
   );
 }
+
+// const getSentiment = (str: string) => {
+//   //add spell check and stop word check?
+
+//   console.log(comments);
+
+//   const sentiment = new Sentiment();
+
+//   if (!str.trim()) {
+//     return 0;
+//   }
+
+//   str = str.toLowerCase().replace(/[^a-zA-Z\s]+/g, "");
+
+//   let result = sentiment.analyze(str);
+
+//   console.log(result);
+// };
+
+// getSentiment("I love you");
