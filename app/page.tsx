@@ -70,12 +70,29 @@ export default function Home() {
             .map((activity) => (
               <Card key={activity.id}>
                 <CardHeader>
-                  <CardTitle>Create project</CardTitle>
+                  <CardTitle>{activity.name}</CardTitle>
                   <CardDescription>
                     Distance in Miles: {activity.distance / 1609.34}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>{activity.name} <br /> {}</CardContent>
+                <CardContent>
+                  Average Pace:
+                  {Math.floor(
+                    activity.distance /
+                      activity.average_speed /
+                      60 /
+                      (activity.distance / 1609.34)
+                  ) +
+                    ":" +
+                    Math.floor(
+                      ((activity.distance /
+                        activity.average_speed /
+                        60 /
+                        (activity.distance / 1609.34)) %
+                        1) *
+                        60
+                    )}
+                </CardContent>
                 <CardFooter className="flex justify-between">
                   Kudos: {activity.kudos_count}
                 </CardFooter>
