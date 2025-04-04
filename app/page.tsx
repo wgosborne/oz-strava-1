@@ -27,6 +27,17 @@ export default function Home() {
 
   useEffect(() => {
     console.log("ACTIVITIES", activities);
+    const coolActivities = activities.filter((act) => {
+      if (
+        act.name != "Morning Run" &&
+        act.name != "Afternoon Run" &&
+        act.name != "Evening Run"
+      ) {
+        return act;
+      }
+    });
+
+    console.log("COOL ONES", coolActivities);
   }, [activities]);
 
   if (isLoading) {

@@ -7,7 +7,6 @@ export async function GET(request: Request) {
   try {
     const { access_token } = await request.json(); // Get the refresh token from the request body
 
-    console.log('route.s', access_token)
     // Make the request to Strava to refresh the token
     const response = await axios.get(
         "https://www.strava.com/api/v3/athlete/activities",
