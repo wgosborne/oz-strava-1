@@ -19,26 +19,26 @@ export default function Home() {
   const error = useStore((state) => state.error);
   const isLoading = useStore((state) => state.isLoading);
   const fetchActivities = useStore((state) => state.fetchActivities);
-  let coolActivities;
+  // let coolActivities = [];
 
   useEffect(() => {
     fetchActivities();
+    // coolActivities = activities.filter((act) => {
+    //   if (
+    //     act.name != "Morning Run" &&
+    //     act.name != "Afternoon Run" &&
+    //     act.name != "Evening Run"
+    //   ) {
+    //     return act;
+    //   }
+    // });
     //fetchTotalDistance();
   }, [fetchActivities]);
 
   useEffect(() => {
     console.log("ACTIVITIES", activities);
-    coolActivities = activities.filter((act) => {
-      if (
-        act.name != "Morning Run" &&
-        act.name != "Afternoon Run" &&
-        act.name != "Evening Run"
-      ) {
-        return act;
-      }
-    });
 
-    console.log("COOL ONES", coolActivities);
+    // console.log("COOL ONES", coolActivities);
   }, [activities]);
 
   if (isLoading) {
@@ -55,20 +55,32 @@ export default function Home() {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      {coolActivities.length > 0 ? (
+      {activities.length > 0 ? (
         <div className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center">
-          {coolActivities.map((activity) => (
-            <Card key={activity.id}>
-              <CardHeader>
-                <CardTitle>Create project</CardTitle>
-                <CardDescription>
-                  Deploy your new project in one-click.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>{activity.name}</CardContent>
-              <CardFooter className="flex justify-between">Footer</CardFooter>
-            </Card>
-          ))}
+          {activities
+            .filter((act) => {
+              if (
+                act.name != "Morning Run" &&
+                act.name != "Afternoon Run" &&
+                act.name != "Evening Run"
+              ) {
+                return act;
+              }
+            })
+            .map((activity) => (
+              <Card key={activity.id}>
+                <CardHeader>
+                  <CardTitle>Create project</CardTitle>
+                  <CardDescription>
+                    Distance in Miles: {activity.distance / 1609.34}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>{activity.name} <br /> {}</CardContent>
+                <CardFooter className="flex justify-between">
+                  Kudos: {activity.kudos_count}
+                </CardFooter>
+              </Card>
+            ))}
         </div>
       ) : (
         <div className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center">
