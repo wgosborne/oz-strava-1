@@ -19,6 +19,7 @@ export default function Home() {
   const error = useStore((state) => state.error);
   const isLoading = useStore((state) => state.isLoading);
   const fetchActivities = useStore((state) => state.fetchActivities);
+  let coolActivities;
 
   useEffect(() => {
     fetchActivities();
@@ -27,7 +28,7 @@ export default function Home() {
 
   useEffect(() => {
     console.log("ACTIVITIES", activities);
-    const coolActivities = activities.filter((act) => {
+    coolActivities = activities.filter((act) => {
       if (
         act.name != "Morning Run" &&
         act.name != "Afternoon Run" &&
@@ -54,9 +55,9 @@ export default function Home() {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      {activities.length > 0 ? (
+      {coolActivities.length > 0 ? (
         <div className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center">
-          {activities.map((activity) => (
+          {coolActivities.map((activity) => (
             <Card key={activity.id}>
               <CardHeader>
                 <CardTitle>Create project</CardTitle>
