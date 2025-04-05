@@ -17,14 +17,18 @@ export default function Page() {
   const fetchQuotes = useStore((state) => state.fetchQuotes);
   const error = useStore((state) => state.error);
   const isLoading = useStore((state) => state.isLoading);
+  const fetchLMResponse = useStore((state) => state.fetchLMResponse);
+  const LMres = useStore((state) => state.LMres);
 
   useEffect(() => {
     fetchQuotes();
-  }, [fetchQuotes]);
+    fetchLMResponse();
+  }, [fetchQuotes, fetchLMResponse]);
 
   useEffect(() => {
     console.log("QUOTES", quotes);
-  }, [quotes]);
+    console.log("LM Res", LMres);
+  }, [quotes, LMres]);
 
   if (isLoading) {
     return <div>Loading...</div>;

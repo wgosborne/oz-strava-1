@@ -4,6 +4,7 @@ import { getAllActivities } from "../actions/getActivities";
 import { getAllComments } from "../actions/getComments";
 import { getAllQuotes } from "../actions/getAllComments";
 import { getAllTweets } from "../actions/getAllTweets";
+import { getCompletion } from "../actions/getLMResponse";
 
 // Define the store
 export const useStore = create((set) => ({
@@ -25,6 +26,7 @@ export const useStore = create((set) => ({
   comments: [],
   quotes: [],
   tweets: [],
+  LMResponse: "",
 
   // Action to set the access token
   //setAccessToken: (token) => set({ accessToken: token }),
@@ -141,5 +143,23 @@ export const useStore = create((set) => ({
 
       set({ chartData: newChartData, isLoading: false });
     });
+  },
+
+  fetchLMResponse: async (resp) => {
+    set({ isLoading: true, error: null }); // Start loading and clear any previous errors
+
+    try {
+      const newRes = await getCompletion();
+
+      // Set the activities data
+      set({ LMResponse: newRes });
+
+      set({
+        isLoading: false,
+      });
+    } catch (err) {
+      // Handle any errors
+      set({ isLoading: false, error: err.message });
+    }
   },
 }));

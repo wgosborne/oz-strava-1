@@ -72,11 +72,12 @@ export default function Home() {
                 <CardHeader>
                   <CardTitle>{activity.name}</CardTitle>
                   <CardDescription>
-                    Distance in Miles: {activity.distance / 1609.34}
+                    Distance in Miles:&#9;
+                    {Math.round(activity.distance / 1609.34, 2)}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  Average Pace:
+                  Average Pace:&#9;
                   {Math.floor(
                     activity.distance /
                       activity.average_speed /
@@ -94,7 +95,7 @@ export default function Home() {
                     )}
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  Kudos: {activity.kudos_count}
+                  Kudos:&#9;{activity.kudos_count}
                 </CardFooter>
               </Card>
             ))}
