@@ -13,9 +13,6 @@ export const getCompletion = async () => {
         messages: [
           { role: "user", content: "Write a short poem about a rainy day" },
         ],
-      },
-      {
-        headers: { "Content-Type": "application/json" },
       }
     );
 
