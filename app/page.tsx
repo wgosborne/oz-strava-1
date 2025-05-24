@@ -35,16 +35,6 @@ export default function Home() {
 
   useEffect(() => {
     fetchActivities();
-    // coolActivities = activities.filter((act) => {
-    //   if (
-    //     act.name != "Morning Run" &&
-    //     act.name != "Afternoon Run" &&
-    //     act.name != "Evening Run"
-    //   ) {
-    //     return act;
-    //   }
-    // });
-    //fetchTotalDistance();
   }, [fetchActivities]);
 
   useEffect(() => {
@@ -95,13 +85,13 @@ export default function Home() {
                 <CardHeader>
                   <CardTitle>{activity.name}</CardTitle>
                   <CardDescription>
-                    Distance in Miles:&#9;
+                    Distance in Miles:&nbsp;
                     {(activity.distance / 1609.34).toFixed(2)}
                     {/* //{Math.round(activity.distance / 1609.34, 2)} */}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  Average Pace:&#9;
+                  Average Pace:&nbsp;
                   {Math.floor(
                     activity.distance /
                       activity.average_speed /
@@ -119,7 +109,7 @@ export default function Home() {
                     )}
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  Kudos:&#9;{activity.kudos_count}
+                  Kudos:&nbsp;{activity.kudos_count}
                 </CardFooter>
               </Card>
             ))}
