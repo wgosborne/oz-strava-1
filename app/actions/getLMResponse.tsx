@@ -4,7 +4,6 @@
 import axios from "axios";
 
 export const getCompletion = async () => {
-
   try {
     const response = await axios.post("/api/lmstudio", {
       model: "phi-3.1-mini-128k-instruct",
@@ -18,7 +17,12 @@ export const getCompletion = async () => {
 
     console.log(response);
     //returns activities
-    return response.data;
+
+    if (!response.data.choices) {
+      return [];
+    } else {
+      return response.data;
+    }
   } catch (err) {
     console.error("Error getting completions:", err);
   }

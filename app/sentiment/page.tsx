@@ -38,8 +38,12 @@ export default function Page() {
     return <div>Error: {error}</div>;
   }
 
-  if (!quotes || !LMResponse) {
+  if (!quotes) {
     return <div>Loading now...</div>; // Prevent rendering before data is available
+  }
+
+  if (!LMResponse) {
+    return <div>No Response From LM Studio</div>; // Prevent rendering before data is available
   }
 
   return (
@@ -54,7 +58,7 @@ export default function Page() {
       ) : (
         <Badge>NADA</Badge>
       )}
-      
+
       <br />
 
       {LMResponse ? (
