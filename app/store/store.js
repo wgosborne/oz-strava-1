@@ -147,7 +147,7 @@ export const useStore = create((set) => ({
     });
   },
 
-  fetchLMResponse: async (resp) => {
+  fetchLMResponse: async () => {
     set({ isLoading: true, error: null }); // Start loading and clear any previous errors
 
     try {
