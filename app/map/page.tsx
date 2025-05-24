@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 
 export default function Page() {
   // Access the state and actions from the store
-  const { activities, isLoading, error, fetchActivities } = useStore();
+  const { activities } = useStore();
 
   const Map = useMemo(
     () =>

@@ -100,17 +100,20 @@ const Map = ({ zoom, activities }: Props) => {
         ) : null;
       })}
 
-      {activities.map((activity) => (
-        <Marker
-          key={activity.id}
-          position={[activity.start_latlng[0], activity.start_latlng[1]]}
-        >
-          <Popup>
-            {activity.name} <br />
-            {activity.distance} meters
-          </Popup>
-        </Marker>
-      ))}
+      {activities.map((activity) => {
+        const latlng = activity.start_latlng;
+        if (!latlng || latlng.length !== 2) return null;
+        if (typeof latlng[0] !== "number" || typeof latlng[1] !== "number")
+          return null;
+
+        return (
+          <Marker key={activity.id} position={[latlng[0], latlng[1]]}>
+            <Popup>
+              {activity.name} <br /> {activity.distance} meters
+            </Popup>
+          </Marker>
+        );
+      })}
     </MapContainer>
   );
 };
