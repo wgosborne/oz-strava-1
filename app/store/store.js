@@ -154,7 +154,7 @@ export const useStore = create((set) => ({
       const newRes = await getCompletion();
 
       // Set the activities data
-      set({ LMResponse: newRes });
+      set({ LMResponse: newRes.choices[0].message.content });
 
       set({
         isLoading: false,

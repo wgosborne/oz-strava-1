@@ -18,7 +18,7 @@ export default function Page() {
   const error = useStore((state) => state.error);
   const isLoading = useStore((state) => state.isLoading);
   const fetchLMResponse = useStore((state) => state.fetchLMResponse);
-  const LMres = useStore((state) => state.LMres);
+  const LMResponse = useStore((state) => state.LMResponse);
 
   useEffect(() => {
     fetchQuotes();
@@ -27,8 +27,8 @@ export default function Page() {
 
   useEffect(() => {
     console.log("QUOTES", quotes);
-    console.log("LM Res", LMres);
-  }, [quotes, LMres]);
+    console.log("LM Res", LMResponse);
+  }, [quotes, LMResponse]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -38,7 +38,7 @@ export default function Page() {
     return <div>Error: {error}</div>;
   }
 
-  if (!quotes) {
+  if (!quotes || !LMResponse) {
     return <div>Loading now...</div>; // Prevent rendering before data is available
   }
 
@@ -54,6 +54,8 @@ export default function Page() {
       ) : (
         <Badge>NADA</Badge>
       )}
+
+      {LMResponse ? <Badge key={LMResponse}>{LMResponse}</Badge> : <Badge>NADA</Badge>}
     </div>
   );
 }

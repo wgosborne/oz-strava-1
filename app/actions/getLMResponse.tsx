@@ -4,13 +4,15 @@
 import axios from "axios";
 
 export const getCompletion = async () => {
-  //const input = "Write a short poem about a rainy day";
 
   try {
     const response = await axios.post("/api/lmstudio", {
       model: "phi-3.1-mini-128k-instruct",
       messages: [
-        { role: "user", content: "Write a short poem about a rainy day" },
+        {
+          role: "user",
+          content: "Write a short poem about a rainy day in 5 words",
+        },
       ],
     });
 
