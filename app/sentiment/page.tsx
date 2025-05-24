@@ -54,8 +54,14 @@ export default function Page() {
       ) : (
         <Badge>NADA</Badge>
       )}
+      
+      <br />
 
-      {LMResponse ? <Badge key={LMResponse}>{LMResponse}</Badge> : <Badge>NADA</Badge>}
+      {LMResponse ? (
+        <Badge key={LMResponse}>{LMResponse}</Badge>
+      ) : (
+        <Badge>NADA</Badge>
+      )}
     </div>
   );
 }
