@@ -8,11 +8,19 @@ import { getCompletion } from "../actions/getLMResponse";
 
 // Define the store
 export const useStore = create((set) => ({
-  theme: localStorage.getItem("theme") || "light", // Load from localStorage
+  theme: "light",
+  setTheme: (theme) => {
+    set({ theme });
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", theme);
+    }
+  },
   toggleTheme: () => {
     set((state) => {
       const newTheme = state.theme === "light" ? "dark" : "light";
-      localStorage.setItem("theme", newTheme); // Save to localStorage
+      if (typeof window !== "undefined") {
+        localStorage.setItem("theme", newTheme);
+      }
       return { theme: newTheme };
     });
   },

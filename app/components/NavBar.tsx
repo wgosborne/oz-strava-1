@@ -18,14 +18,15 @@ export const NavBar = () => {
     { label: "Analyze my Kudos", href: "/sentiment" },
   ];
 
-  const { theme, toggleTheme } = useStore(); // Get the current theme and toggle function
+  const { theme, setTheme, toggleTheme } = useStore(); // Get the current theme and toggle function
 
   console.log(theme);
 
   // Update the body data-theme attribute whenever theme changes
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
+    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
+    if (stored) setTheme(stored);
+  }, [setTheme]);
 
   return (
     <nav className="flex space-x-6 borber-b px-5 h-14 items-center">
