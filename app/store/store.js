@@ -27,6 +27,8 @@ export const useStore = create((set) => ({
   quotes: [],
   tweets: [],
   LMResponse: "",
+  excludeRuns: false,
+  setExcludeRuns: (value) => set({ excludeRuns: value }),
 
   // Action to set the access token
   //setAccessToken: (token) => set({ accessToken: token }),
