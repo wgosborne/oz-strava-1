@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { MdBugReport } from "react-icons/md";
 import classNames from "classnames";
 import { useStore } from "../store/store";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 export const NavBar = () => {
   const currPath = usePathname();
@@ -58,8 +60,15 @@ export const NavBar = () => {
           );
         })}
       </ul>
-      <div className="ml-auto">
-        <button onClick={toggleTheme}>Toggle Theme</button>
+      <div className="ml-auto space-x-4">
+        <Switch
+          id="toggle-theme"
+          checked={theme === "dark"}
+          onCheckedChange={toggleTheme}
+        />
+        <Label htmlFor="toggle-theme">
+          {theme === "dark" ? "Dark Mode" : "Light Mode"}
+        </Label>
       </div>
     </nav>
   );
