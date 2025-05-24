@@ -18,9 +18,8 @@ export const useStore = create((set) => ({
   toggleTheme: () => {
     set((state) => {
       const newTheme = state.theme === "light" ? "dark" : "light";
-      if (typeof window !== "undefined") {
-        localStorage.setItem("theme", newTheme);
-      }
+      localStorage.setItem("theme", newTheme);
+      document.documentElement.classList.toggle("dark", newTheme === "dark");
       return { theme: newTheme };
     });
   },
