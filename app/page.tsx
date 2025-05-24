@@ -40,7 +40,6 @@ export default function Home() {
   useEffect(() => {
     console.log("ACTIVITIES", activities);
 
-    // console.log("COOL ONES", coolActivities);
   }, [activities]);
 
   if (isLoading) {

@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const getAllTweets = async () => {
-  console.log(process.env.BearerToken);
   try {
     const baseUrl = "https://api.x.com/2/tweets/search/recent?";
 
@@ -16,10 +15,7 @@ export const getAllTweets = async () => {
       },
     });
 
-    //SetActivities(response.data);
 
-    console.log("From Twitter Get", response);
-    //returns activities
     return response.data;
   } catch (err) {
     console.error("Error getting all activities:", err);

@@ -16,7 +16,6 @@ export async function GET(request: Request) {
           },
         }
     );
-    console.log('route response', response)
 
     // Send the new access token back in the response
     return NextResponse.json(response.data);

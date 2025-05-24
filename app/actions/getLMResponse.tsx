@@ -15,8 +15,6 @@ export const getCompletion = async () => {
       ],
     });
 
-    console.log(response);
-    //returns activities
 
     if (!response.data.choices) {
       return [];

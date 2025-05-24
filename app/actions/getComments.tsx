@@ -14,10 +14,7 @@ export const getAllComments = async () => {
       }
     );
 
-    //SetActivities(response.data);
 
-    console.log(response);
-    //returns activities
     return response.data;
   } catch (err) {
     console.error("Error getting all activities:", err);

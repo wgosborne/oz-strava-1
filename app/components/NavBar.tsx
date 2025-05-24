@@ -11,7 +11,6 @@ import { Switch } from "@/components/ui/switch";
 
 export const NavBar = () => {
   const currPath = usePathname();
-  console.log(currPath);
 
   const links = [
     { label: "Dashboard", href: "/" },
@@ -21,8 +20,6 @@ export const NavBar = () => {
   ];
 
   const { theme, setTheme, toggleTheme } = useStore(); // Get the current theme and toggle function
-
-  console.log(theme);
 
   // Update the body data-theme attribute whenever theme changes
   useEffect(() => {

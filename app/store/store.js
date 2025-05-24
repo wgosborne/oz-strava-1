@@ -158,8 +158,6 @@ export const useStore = create((set) => ({
     try {
       const newRes = await getCompletion();
 
-      console.log("HERE", newRes);
-
       // Set the activities data
       if (!newRes) {
         set({ LMResponse: "" });
