@@ -11,9 +11,7 @@ export const useStore = create((set) => ({
   theme: "light",
   setTheme: (theme) => {
     set({ theme });
-    if (typeof window !== "undefined") {
-      localStorage.setItem("theme", theme);
-    }
+    localStorage.setItem("theme", theme);
   },
   toggleTheme: () => {
     set((state) => {
@@ -41,7 +39,7 @@ export const useStore = create((set) => ({
   //setAccessToken: (token) => set({ accessToken: token }),
 
   // Action to fetch activities
-  fetchActivities: async (refreshToken) => {
+  fetchActivities: async () => {
     set({ isLoading: true, error: null }); // Start loading and clear any previous errors
     try {
       // Wait for the refreshed access token
