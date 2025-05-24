@@ -43,14 +43,14 @@ export const NavBar = () => {
               className={
                 theme === "dark"
                   ? classNames({
-                      "text-zinc-900": link.href === currPath,
+                      "text-white": link.href === currPath,
                       "text-neutral-600": link.href !== currPath,
-                      "hover:text-red-800 transition-colors": true,
+                      "hover:text-cyan-200 transition-colors": true,
                     })
                   : classNames({
-                      "text-white": link.href === currPath,
+                      "text-black": link.href === currPath,
                       "text-zinc-500": link.href !== currPath,
-                      "hover:text-rose-800 transition-colors": true,
+                      "hover:text-cyan-400 transition-colors": true,
                     })
               }
               href={link.href}
