@@ -43,7 +43,13 @@ export default function Page() {
   }
 
   if (!LMResponse) {
-    return <div>No Response From LM Studio</div>; // Prevent rendering before data is available
+    return (
+      <div>
+        No Response From LM Studio, try turning the LM Studio status to running.
+        If already running, please wait for the responde, could take up to a
+        minute{" "}
+      </div>
+    ); // Prevent rendering before data is available
   }
 
   return (

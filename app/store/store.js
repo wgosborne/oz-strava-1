@@ -207,7 +207,8 @@ export const useStore = create((set) => ({
       if (!newRes) {
         set({ LMResponse: "" });
       } else {
-        set({ LMResponse: newRes[0].message.content });
+        console.log(newRes);
+        set({ LMResponse: newRes.choices[0].message.content });
       }
 
       set({
