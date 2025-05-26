@@ -1,4 +1,5 @@
 import React from "react";
+import { Activity } from "../types/Activity";
 import {
   MapContainer,
   Marker,
@@ -23,7 +24,7 @@ const Map = ({ zoom, activities }: Props) => {
 
   const mapStyle = { height: "750px", width: "100%" };
 
-  const getCoordinatesForActivity = (activity: any) => {
+  const getCoordinatesForActivity = (activity: Activity) => {
     if (activity && activity.summary_polyline) {
       // Decode polyline (Strava format)
       const polyline = decodePolyline(activity.summary_polyline);
@@ -86,7 +87,7 @@ const Map = ({ zoom, activities }: Props) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {activities.map((activity) => {
+      {activities.map((activity: Activity) => {
         const coordinates = getCoordinatesForActivity(activity); // Get coordinates for the polyline
 
         return coordinates.length > 0 ? (
@@ -100,15 +101,11 @@ const Map = ({ zoom, activities }: Props) => {
         ) : null;
       })}
 
-      {/* "start_lat": 35.144548,
-    "start_lng": -90.049537,
-    "end_lat": 35.144203,
-    "end_lng": */}
-      {activities.map((activity) => {
+      {activities.map((activity: Activity) => {
         console.log(activity.start_lng);
-        const latlng = activity.start_lng;
-        if (!latlng) return null;
-        if (typeof latlng !== "number") return null;
+        if (!activity.start_lat) return null;
+        if (typeof activity.start_lat !== "number") return null;
+        if (typeof activity.start_lng !== "number") return null;
 
         return (
           <Marker
