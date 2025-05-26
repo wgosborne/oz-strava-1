@@ -114,7 +114,7 @@ export const useStore = create((set) => ({
     }
   },
 
-  fetchComments: async (refreshToken) => {
+  fetchComments: async () => {
     set({ isLoading: true, error: null }); // Start loading and clear any previous errors
     try {
       // Wait for the refreshed access token

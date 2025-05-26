@@ -25,6 +25,7 @@ export async function GET(req: NextRequest) {
 
       return NextResponse.json(result.recordset, { status: 200 });
     }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('GET error:', error);
     return NextResponse.json({ message: 'Server error', error: error.message }, { status: 500 });
@@ -71,6 +72,7 @@ export async function PUT(req: NextRequest) {
       `);
 
     return NextResponse.json({ message: 'Activity updated' }, { status: 200 });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('PUT error:', error);
     return NextResponse.json({ message: 'Server error', error: error.message }, { status: 500 });
@@ -93,6 +95,7 @@ export async function DELETE(req: NextRequest) {
       .query('DELETE FROM activities WHERE id = @id');
 
     return NextResponse.json({ message: 'Activity deleted' }, { status: 200 });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('DELETE error:', error);
     return NextResponse.json({ message: 'Server error', error: error.message }, { status: 500 });
