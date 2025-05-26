@@ -16,6 +16,7 @@ export interface Activity {
     location_city: string | null;
     location_state: string | null;
     location_country: string | null;
+    summary_polyline: string | null;
     start_lat: number | null;
     start_lng: number | null;
     end_lat: number | null;

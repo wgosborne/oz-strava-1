@@ -5,7 +5,6 @@ import {
   Marker,
   Popup,
   TileLayer,
-  Tooltip,
   Polyline,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
