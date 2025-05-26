@@ -1,5 +1,6 @@
 // store.js (or zustandStore.js)
 import { create } from "zustand";
+import axios from "axios";
 import { getAllActivities } from "../actions/getActivities";
 import { getAllComments } from "../actions/getComments";
 import { getAllQuotes } from "../actions/getAllComments";
@@ -37,6 +38,46 @@ export const useStore = create((set) => ({
 
   // Action to set the access token
   //setAccessToken: (token) => set({ accessToken: token }),
+  syncActivities: async (activities) => {
+    set({ isLoading: true, error: null }); // Start loading and clear any previous errors
+    try {
+      axios.post("/api/refreshDatabase", { activities });
+
+      set({ isLoading: false });
+    } catch (err) {
+      // Handle any errors
+      set({ isLoading: false, error: err.message });
+    }
+  },
+  fetchActivitiesFromStrava: async () => {
+    set({ isLoading: true, error: null }); // Start loading and clear any previous errors
+    try {
+      // Wait for the refreshed access token
+      //   const token = await refreshToken();
+
+      //   // Set the access token in the store
+      //   set({ accessToken: token });
+
+      // Fetch activities using the token
+      const newActivities = await getAllActivities();
+
+      // Set the activities data
+      set({ activities: newActivities });
+
+      var thisTotalDistance = 0;
+
+      newActivities.map((act) => {
+        thisTotalDistance += act.distance;
+      });
+      set({
+        totalDistance: thisTotalDistance.toFixed(2),
+        isLoading: false,
+      });
+    } catch (err) {
+      // Handle any errors
+      set({ isLoading: false, error: err.message });
+    }
+  },
 
   // Action to fetch activities
   fetchActivities: async () => {
@@ -49,7 +90,11 @@ export const useStore = create((set) => ({
       //   set({ accessToken: token });
 
       // Fetch activities using the token
-      const newActivities = await getAllActivities();
+      //const newActivities = await getAllActivities();
+
+      const newActivitiesRaw = await axios.get("/api/database");
+      console.log("newActivitiesRaw", newActivitiesRaw);
+      const newActivities = newActivitiesRaw.data;
 
       // Set the activities data
       set({ activities: newActivities });

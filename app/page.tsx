@@ -1,14 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import {
-  JSXElementConstructor,
-  Key,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-  useEffect,
-} from "react";
+import { useEffect } from "react";
 //import RefreshReadAcessToken from "../api/refreshToken";
 import { useStore } from "./store/store";
 import Footer from "./components/Footer";
@@ -29,18 +22,23 @@ export default function Home() {
   const error = useStore((state) => state.error);
   const isLoading = useStore((state) => state.isLoading);
   const fetchActivities = useStore((state) => state.fetchActivities);
+  const syncActivities = useStore((state) => state.syncActivities);
+  const fetchActivitiesFromStrava = useStore(
+    (state) => state.fetchActivitiesFromStrava
+  );
   const excludeRuns = useStore((state) => state.excludeRuns);
   const setExcludeRuns = useStore((state) => state.setExcludeRuns);
   let filteredActivities: any[] = [];
 
   useEffect(() => {
-    fetchActivities();
+    //fetchActivities();
+    fetchActivitiesFromStrava();
   }, [fetchActivities]);
 
   useEffect(() => {
     console.log("ACTIVITIES", activities);
-
-  }, [activities]);
+    syncActivities(activities);
+  }, [activities, syncActivities]);
 
   if (isLoading) {
     return <div>Loading...</div>;

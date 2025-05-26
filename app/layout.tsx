@@ -4,6 +4,8 @@ import ThemeHydrationWrapper from "./components/ThemeHydrationWrapper"; // or wh
 import { NavBar } from "./components/NavBar";
 import "./globals.css";
 import { useStore } from "./store/store";
+import { shouldSync } from "@/lib/sync";
+import axios from "axios";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +21,17 @@ export const metadata: Metadata = {
   title: "wags loves to run",
   description: "Special shout out to Hyperfocus and coffee!",
 };
+
+// if (shouldSync()) {
+//   console.log("Running Strava sync on startup...");
+//   try {
+//     await axios.post(
+//       "http://localhost:3000/api/refreshDatabase"
+//     );
+//   } catch (err) {
+//     console.error("Strava sync failed:", err);
+//   }
+// }
 
 export default function RootLayout({
   children,
