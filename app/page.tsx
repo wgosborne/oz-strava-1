@@ -31,8 +31,8 @@ export default function Home() {
   let filteredActivities: any[] = [];
 
   useEffect(() => {
-    //fetchActivities();
-    fetchActivitiesFromStrava();
+    fetchActivities();
+    //fetchActivitiesFromStrava();
   }, [fetchActivities]);
 
   useEffect(() => {
