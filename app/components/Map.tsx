@@ -101,7 +101,6 @@ const Map = ({ zoom, activities }: Props) => {
       })}
 
       {activities.map((activity: Activity) => {
-        console.log(activity.start_lng);
         if (!activity.start_lat) return null;
         if (typeof activity.start_lat !== "number") return null;
         if (typeof activity.start_lng !== "number") return null;

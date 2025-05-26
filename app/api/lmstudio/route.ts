@@ -13,13 +13,22 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify(body),
     });
 
+    if (!lmstudioResponse.ok) {
+      const errorText = await lmstudioResponse.text(); // try to get more details
+      return NextResponse.json(
+        { error: 'LM Studio responded with an error', details: errorText },
+        { status: lmstudioResponse.status }
+      );
+    }
+
     const data = await lmstudioResponse.json();
 
     return NextResponse.json(data);
-  } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     console.error('LM Studio Proxy Error:', error);
     return NextResponse.json(
-      { error: 'Failed to connect to LM Studio' },
+      { error: 'Failed to connect to LM StudioIs it running?', details: error.message },
       { status: 500 }
     );
   }

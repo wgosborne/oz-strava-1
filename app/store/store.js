@@ -93,7 +93,6 @@ export const useStore = create((set) => ({
       //const newActivities = await getAllActivities();
 
       const newActivitiesRaw = await axios.get("/api/database");
-      console.log("newActivitiesRaw", newActivitiesRaw);
       const newActivities = newActivitiesRaw.data;
 
       // Set the activities data
@@ -204,7 +203,7 @@ export const useStore = create((set) => ({
       const newRes = await getCompletion();
 
       // Set the activities data
-      if (!newRes) {
+      if (!newRes || newRes.length == 0) {
         set({ LMResponse: "" });
       } else {
         console.log(newRes);

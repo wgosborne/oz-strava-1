@@ -35,7 +35,12 @@ export default function Page() {
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div>
+        Error: {error} <br />
+        Check that LM Studio is running
+      </div>
+    );
   }
 
   if (!quotes) {

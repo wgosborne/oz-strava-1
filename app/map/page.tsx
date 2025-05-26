@@ -19,7 +19,7 @@ export default function Page() {
   );
 
   useEffect(() => {
-    console.log("ACTIVITIES", activities);
+    //console.log("ACTIVITIES", activities);
   });
 
   return (

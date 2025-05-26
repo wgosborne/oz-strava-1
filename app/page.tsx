@@ -32,11 +32,12 @@ export default function Home() {
 
   useEffect(() => {
     fetchActivities();
+    ////// UNCOMMENT THIS BELOW TO SYNC UP THE DATABASE
     //fetchActivitiesFromStrava();
   }, [fetchActivities]);
 
   useEffect(() => {
-    console.log("ACTIVITIES", activities);
+    //console.log("ACTIVITIES", activities);
     syncActivities(activities);
   }, [activities, syncActivities]);
 
