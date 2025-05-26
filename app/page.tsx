@@ -23,9 +23,9 @@ export default function Home() {
   const isLoading = useStore((state) => state.isLoading);
   const fetchActivities = useStore((state) => state.fetchActivities);
   const syncActivities = useStore((state) => state.syncActivities);
-  const fetchActivitiesFromStrava = useStore(
-    (state) => state.fetchActivitiesFromStrava
-  );
+  // const fetchActivitiesFromStrava = useStore(
+  //   (state) => state.fetchActivitiesFromStrava
+  // );
   const excludeRuns = useStore((state) => state.excludeRuns);
   const setExcludeRuns = useStore((state) => state.setExcludeRuns);
   let filteredActivities: any[] = [];

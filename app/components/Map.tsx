@@ -24,9 +24,9 @@ const Map = ({ zoom, activities }: Props) => {
   const mapStyle = { height: "750px", width: "100%" };
 
   const getCoordinatesForActivity = (activity: any) => {
-    if (activity.map && activity.map.summary_polyline) {
+    if (activity && activity.summary_polyline) {
       // Decode polyline (Strava format)
-      const polyline = decodePolyline(activity.map.summary_polyline);
+      const polyline = decodePolyline(activity.summary_polyline);
 
       return polyline;
     }
@@ -100,16 +100,24 @@ const Map = ({ zoom, activities }: Props) => {
         ) : null;
       })}
 
+      {/* "start_lat": 35.144548,
+    "start_lng": -90.049537,
+    "end_lat": 35.144203,
+    "end_lng": */}
       {activities.map((activity) => {
-        const latlng = activity.start_latlng;
-        if (!latlng || latlng.length !== 2) return null;
-        if (typeof latlng[0] !== "number" || typeof latlng[1] !== "number")
-          return null;
+        console.log(activity.start_lng);
+        const latlng = activity.start_lng;
+        if (!latlng) return null;
+        if (typeof latlng !== "number") return null;
 
         return (
-          <Marker key={activity.id} position={[latlng[0], latlng[1]]}>
+          <Marker
+            key={activity.id}
+            position={[activity.start_lat, activity.start_lng]}
+          >
             <Popup>
-              {activity.name} <br /> {activity.distance} meters
+              {activity.name} <br /> {(activity.distance / 1609.34).toFixed(2)}{" "}
+              Miles
             </Popup>
           </Marker>
         );
