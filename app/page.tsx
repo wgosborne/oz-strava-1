@@ -38,8 +38,9 @@ export default function Home() {
   }, [fetchActivities]);
 
   useEffect(() => {
-    //console.log("ACTIVITIES", activities);
-    syncActivities(activities);
+    console.log("ACTIVITIES", activities);
+    ////// UNCOMMENT THIS BELOW TO SYNC UP THE DATABASE
+    //syncActivities(activities);
   }, [activities, syncActivities]);
 
   if (isLoading) {
@@ -76,6 +77,7 @@ export default function Home() {
             checked={excludeRuns}
             onCheckedChange={setExcludeRuns}
           />
+          <Label>Run Count:&nbsp;{filteredActivities.length}</Label>
         </div>
         {activities.length > 0 ? (
           <div className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center">
@@ -98,14 +100,16 @@ export default function Home() {
                       (activity.distance / 1609.34)
                   ) +
                     ":" +
-                    Math.floor(
-                      ((activity.distance /
-                        activity.average_speed /
-                        60 /
-                        (activity.distance / 1609.34)) %
-                        1) *
-                        60
-                    )}
+                    String(
+                      Math.floor(
+                        ((activity.distance /
+                          activity.average_speed /
+                          60 /
+                          (activity.distance / 1609.34)) %
+                          1) *
+                          60
+                      )
+                    ).padStart(2, "0")}
                 </CardContent>
                 <CardFooter className="flex justify-between">
                   Kudos:&nbsp;{activity.kudos_count}
