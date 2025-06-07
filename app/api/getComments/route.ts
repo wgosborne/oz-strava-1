@@ -1,3 +1,5 @@
+//not using rn
+
 // /app/api/getActivities/route.ts
 import axios from 'axios';
 import { NextResponse } from 'next/server';

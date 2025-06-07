@@ -10,6 +10,7 @@ export const getAllActivities = async () => {
       {
         params: {
           access_token: access_token,
+          per_page: 200,
         },
       }
     );

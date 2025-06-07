@@ -24,23 +24,23 @@ export default function Home() {
   const fetchActivities = useStore((state) => state.fetchActivities);
   const syncActivities = useStore((state) => state.syncActivities);
   ////// UNCOMMENT THIS BELOW TO SYNC UP THE DATABASE
-  // const fetchActivitiesFromStrava = useStore(
-  //   (state) => state.fetchActivitiesFromStrava
-  // );
+  const fetchActivitiesFromStrava = useStore(
+    (state) => state.fetchActivitiesFromStrava
+  );
   const excludeRuns = useStore((state) => state.excludeRuns);
   const setExcludeRuns = useStore((state) => state.setExcludeRuns);
   let filteredActivities: any[] = [];
 
   useEffect(() => {
-    fetchActivities();
+    //fetchActivities();
     ////// UNCOMMENT THIS BELOW TO SYNC UP THE DATABASE
-    //fetchActivitiesFromStrava();
-  }, [fetchActivities]);
+    fetchActivitiesFromStrava();
+  }, [fetchActivitiesFromStrava]);
 
   useEffect(() => {
     console.log("ACTIVITIES", activities);
     ////// UNCOMMENT THIS BELOW TO SYNC UP THE DATABASE
-    //syncActivities(activities);
+    syncActivities(activities);
   }, [activities, syncActivities]);
 
   if (isLoading) {
