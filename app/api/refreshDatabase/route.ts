@@ -4,6 +4,8 @@ import { NextRequest } from 'next/server';
 import sql from 'mssql';
 import { getDb } from '@/lib/db';
 
+//merging to DB
+
 export async function POST(req: NextRequest) {
   try {
     const db = await getDb();
@@ -34,6 +36,7 @@ export async function POST(req: NextRequest) {
         location_country,
         start_latlng,
         end_latlng,
+        description,
         athlete: { id: athlete_id } = {},
         map: { summary_polyline } = {},
       } = activity;
@@ -65,7 +68,8 @@ export async function POST(req: NextRequest) {
         .input('end_lat', sql.Float, end_lat)
         .input('end_lng', sql.Float, end_lng)
         .input('athlete_id', sql.BigInt, athlete_id)
-        .input('raw_json', sql.NVarChar(sql.MAX), JSON.stringify(activity));
+        .input('raw_json', sql.NVarChar(sql.MAX), JSON.stringify(activity))
+        .input('description', sql.NVarChar(sql.MAX), description);;
 
       await request.query(`
         MERGE activities AS target
@@ -93,7 +97,8 @@ export async function POST(req: NextRequest) {
           @end_lat AS end_lat,
           @end_lng AS end_lng,
           @athlete_id AS athlete_id,
-          @raw_json AS raw_json
+          @raw_json AS raw_json,
+          @description as description
         ) AS source
         ON target.id = source.id
 
@@ -121,21 +126,22 @@ export async function POST(req: NextRequest) {
             end_lat = source.end_lat,
             end_lng = source.end_lng,
             athlete_id = source.athlete_id,
-            raw_json = source.raw_json
+            raw_json = source.raw_json,
+            description = source.description
 
         WHEN NOT MATCHED THEN
           INSERT (
             id, name, type, start_date, distance, moving_time, elapsed_time,
             average_speed, max_speed, total_elevation_gain, kudos_count, comment_count,
             gear_id, visibility, location_city, location_state, location_country,
-            summary_polyline, start_lat, start_lng, end_lat, end_lng, athlete_id, raw_json
+            summary_polyline, start_lat, start_lng, end_lat, end_lng, athlete_id, raw_json, description
           ) VALUES (
             source.id, source.name, source.type, source.start_date, source.distance,
             source.moving_time, source.elapsed_time, source.average_speed, source.max_speed,
             source.total_elevation_gain, source.kudos_count, source.comment_count,
             source.gear_id, source.visibility, source.location_city, source.location_state,
             source.location_country, source.summary_polyline, source.start_lat,
-            source.start_lng, source.end_lat, source.end_lng, source.athlete_id, source.raw_json
+            source.start_lng, source.end_lat, source.end_lng, source.athlete_id, source.raw_json, source.description
           );
       `);
 

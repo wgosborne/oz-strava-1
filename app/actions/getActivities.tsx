@@ -10,12 +10,42 @@ export const getAllActivities = async () => {
       {
         params: {
           access_token: access_token,
-          per_page: 200,
+          after: 1749254400, //after june 7th
+          per_page: 20,
         },
       }
     );
 
-    return response.data;
+    const activities = response.data;
+    const activitiesWithNotes = [];
+
+    //getting description
+    for (const activity of activities) {
+      try {
+        const detailedActivityResponse = await axios.get(
+          `https://www.strava.com/api/v3/activities/${activity.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        const detailedActivity = detailedActivityResponse.data;
+        activitiesWithNotes.push({
+          ...activity, // Include existing activity data
+          description: detailedActivity.description || "", // Add the notes
+        });
+      } catch (err) {
+        console.error(
+          `Error getting detailed activity for ${activity.id}:`,
+          err
+        );
+
+        activitiesWithNotes.push(activity);
+      }
+    }
+
+    return activitiesWithNotes;
   } catch (err) {
     console.error("Error getting all activities:", err);
   }

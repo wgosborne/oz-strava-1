@@ -3,6 +3,7 @@ import sql from 'mssql';
 import { getDb } from '@/lib/db';
 
 // GET: /api/activities or /api/activities?id=123
+//merge statement to update the database
 export async function GET(req: NextRequest) {
   const db = await getDb();
   const { searchParams } = new URL(req.url);
@@ -36,6 +37,9 @@ export async function GET(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   const db = await getDb();
   const body = await req.json();
+
+  console.log('coming from database route.ts');
+
 
   const {
     id,

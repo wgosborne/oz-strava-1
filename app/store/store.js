@@ -35,6 +35,8 @@ export const useStore = create((set) => ({
   LMResponse: "",
   excludeRuns: false,
   setExcludeRuns: (value) => set({ excludeRuns: value }),
+  expandedCards: [],
+  setExpandedCards: (value) => set({ expandedCards: value }),
 
   // Action to set the access token
   //setAccessToken: (token) => set({ accessToken: token }),
