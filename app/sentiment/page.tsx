@@ -3,6 +3,19 @@
 
 "use client";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 // import { WordTokenizer } from "natural";
 // import aposToLexForm from "apos-to-lex-form";
 // import SpellCorrector from "spelling-corrector";
@@ -14,6 +27,7 @@ import { useStore } from "../store/store";
 
 export default function Page() {
   const quotes = useStore((state) => state.quotes);
+  const activities = useStore((state) => state.activities);
   const fetchQuotes = useStore((state) => state.fetchQuotes);
   const error = useStore((state) => state.error);
   const isLoading = useStore((state) => state.isLoading);
@@ -21,12 +35,12 @@ export default function Page() {
   const LMResponse = useStore((state) => state.LMResponse);
 
   useEffect(() => {
-    fetchQuotes();
-    fetchLMResponse();
-  }, [fetchQuotes, fetchLMResponse]);
+    //fetchQuotes();
+    fetchLMResponse(activities);
+  }, [fetchQuotes, fetchLMResponse, activities]);
 
   useEffect(() => {
-    console.log("QUOTES", quotes);
+    //console.log("QUOTES", quotes);
     console.log("LM Res", LMResponse);
   }, [quotes, LMResponse]);
 
@@ -43,40 +57,54 @@ export default function Page() {
     );
   }
 
-  if (!quotes) {
-    return <div>Loading now...</div>; // Prevent rendering before data is available
-  }
+  // if (!quotes) {
+  //   return <div>Loading now...</div>; // Prevent rendering before data is available
+  // }
 
   if (!LMResponse) {
     return (
       <div>
         No Response From LM Studio, try turning the LM Studio status to running.
         If already running, please wait for the responde, could take up to a
-        minute{" "}
+        minute
       </div>
     ); // Prevent rendering before data is available
   }
 
   return (
-    <div>
-      <h2>Sentiment Analysis</h2>
-      {/* {quotesArray.map((quote) => (
-        <Badge key={quote.id}>{quote.quote}</Badge>
-      ))} */}
-
-      {quotes ? (
-        <Badge key={quotes.id}>{quotes.quote}</Badge>
-      ) : (
-        <Badge>NADA</Badge>
-      )}
-
-      <br />
-
-      {LMResponse ? (
-        <Badge key={LMResponse}>{LMResponse}</Badge>
-      ) : (
-        <Badge>NADA</Badge>
-      )}
+    <div className="p-4">
+      <Tabs defaultValue="chat">
+        <TabsList>
+          <TabsTrigger value="chat">Chat</TabsTrigger>
+          <TabsTrigger value="plan">Plan</TabsTrigger>
+        </TabsList>
+        <TabsContent value="chat">
+          <div className="items-center space-x-">
+            <Card className="h-[310px] w-full flex flex-col justify-between">
+              <CardHeader className="overflow-hidden">
+                <CardTitle className="text-wrap break-words text-base">
+                  Chat with Coach
+                </CardTitle>
+                <CardDescription className="text-wrap break-words text-sm line-clamp-6">
+                  Analysis
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-md">{LMResponse}</CardContent>
+              <CardFooter className="flex justify-between text-sm">
+                Footer
+              </CardFooter>
+            </Card>
+            <br></br>
+            <div className="">
+              <Textarea
+                className="w-full"
+                placeholder="Type your message here."
+              />
+            </div>
+          </div>
+        </TabsContent>
+        <TabsContent value="plan">Plan goes here.</TabsContent>
+      </Tabs>
     </div>
   );
 }

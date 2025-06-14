@@ -198,11 +198,11 @@ export const useStore = create((set) => ({
     });
   },
 
-  fetchLMResponse: async () => {
+  fetchLMResponse: async (activities) => {
     set({ isLoading: true, error: null }); // Start loading and clear any previous errors
 
     try {
-      const newRes = await getCompletion();
+      const newRes = await getCompletion(activities);
 
       // Set the activities data
       if (!newRes || newRes.length == 0) {

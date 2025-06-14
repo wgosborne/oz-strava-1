@@ -5,14 +5,59 @@
 
 import axios from "axios";
 
-export const getCompletion = async () => {
+export const getCompletion = async (activities: any[]) => {
+  const now = new Date();
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(now.getMonth() - 1);
+  let filteredActivities = [];
+
+  //getting activities for just past month
+  filteredActivities = activities
+    .filter((activity) => {
+      const activityDate = new Date(activity.start_date);
+      return activityDate >= oneMonthAgo && activityDate <= now;
+    })
+    .map(
+      ({
+        id,
+        name,
+        distance,
+        moving_time,
+        average_speed,
+        max_speed,
+        total_elevation_gain,
+        start_date,
+      }) => ({
+        id,
+        name,
+        distance: (distance / 1609.34).toFixed(2),
+        moving_time,
+        average_speed:
+          Math.floor(distance / average_speed / 60 / distance / 1609.34) +
+          ":" +
+          String(
+            Math.floor(
+              ((distance / average_speed / 60 / (distance / 1609.34)) % 1) * 60
+            )
+          ).padStart(2, "0"),
+        max_speed,
+        total_elevation_gain,
+        start_date,
+      })
+    );
+
   try {
     const response = await axios.post("/api/lmstudio", {
       model: "phi-3.1-mini-128k-instruct",
       messages: [
         {
+          role: "system",
+          content:
+            "You are a professional running coach. Speak in an encouraging and knowledgeable tone, provide structured training plans, pace advice, and your primary concern is injury prevention",
+        },
+        {
           role: "user",
-          content: "Write a short poem about a rainy day in 5 words",
+          content: `Here is data about my runs for the past month ${filteredActivities} give me about a paragraph with insights into how my training is looking and include bullet points at the bottom of my average distance and pace.`,
         },
       ],
     });
