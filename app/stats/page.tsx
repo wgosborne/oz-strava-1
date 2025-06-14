@@ -34,10 +34,8 @@ export default function Page() {
     },
   } satisfies ChartConfig;
 
-
   useEffect(() => {
     fetchChartData(activities);
-
   }, [fetchChartData, activities]);
 
   if (isLoading) {
