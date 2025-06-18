@@ -35,8 +35,11 @@ export default function Page() {
   const LMResponse = useStore((state) => state.LMResponse);
 
   useEffect(() => {
+    console.log(LMResponse);
     //fetchQuotes();
-    fetchLMResponse(activities);
+    if (LMResponse.length == 0) {
+      fetchLMResponse(activities);
+    }
   }, [fetchQuotes, fetchLMResponse, activities]);
 
   useEffect(() => {
@@ -100,6 +103,9 @@ export default function Page() {
                 className="w-full"
                 placeholder="Type your message here."
               />
+            </div>
+            <div className="py-3 float-right pr-5">
+              <Button>Send</Button>
             </div>
           </div>
         </TabsContent>
