@@ -33,19 +33,35 @@ export default function Page() {
   const isLoading = useStore((state) => state.isLoading);
   const fetchLMResponse = useStore((state) => state.fetchLMResponse);
   const LMResponse = useStore((state) => state.LMResponse);
+  const addMessage = useStore((state) => state.addMessage);
+  const MessageParams = useStore((state) => state.MessageParams);
 
   useEffect(() => {
     console.log(LMResponse);
     //fetchQuotes();
     if (LMResponse.length == 0) {
-      fetchLMResponse(activities);
+      fetchLMResponse(activities, "");
     }
   }, [fetchQuotes, fetchLMResponse, activities]);
 
   useEffect(() => {
     //console.log("QUOTES", quotes);
     console.log("LM Res", LMResponse);
+    if (LMResponse) {
+      addMessage({ role: "assistant", content: LMResponse });
+    }
   }, [quotes, LMResponse]);
+
+  const SendResponse = () => {
+    const text = document.getElementById("UserResponse").value.trim();
+    console.log(text);
+    const newMessageParams = {
+      role: "user",
+      content: `${text}. Respond in 200 words.`,
+    };
+    fetchLMResponse(activities, newMessageParams);
+    textarea.value = "";
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -117,10 +133,6 @@ export default function Page() {
     </div>
   );
 }
-
-const SendResponse = () => {
-  const text = document.getElementById("UserResponse").value.trim();
-};
 
 // const getSentiment = (str: string) => {
 //   //add spell check and stop word check?

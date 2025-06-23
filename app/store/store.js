@@ -33,6 +33,10 @@ export const useStore = create((set) => ({
   quotes: [],
   tweets: [],
   LMResponse: "",
+  MessageParams: [],
+  setMessageParams: (value) => set({ MessageParams: value }),
+  addMessage: (msg) =>
+    set((state) => ({ MessageParams: [...state.MessageParams, msg] })),
   excludeRuns: false,
   setExcludeRuns: (value) => set({ excludeRuns: value }),
   expandedCards: [],
@@ -198,11 +202,71 @@ export const useStore = create((set) => ({
     });
   },
 
-  fetchLMResponse: async (activities) => {
+  fetchLMResponse: async (activities, newMessageParams) => {
     set({ isLoading: true, error: null }); // Start loading and clear any previous errors
 
+    const now = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(now.getMonth() - 1);
+    let filteredActivities = [];
+
+    //getting activities for just past month
+    filteredActivities = activities
+      .filter((activity) => {
+        const activityDate = new Date(activity.start_date);
+        return activityDate >= oneMonthAgo && activityDate <= now;
+      })
+      .map(
+        ({
+          id,
+          name,
+          distance,
+          moving_time,
+          average_speed,
+          max_speed,
+          total_elevation_gain,
+          start_date,
+        }) => ({
+          id,
+          name,
+          distance: (distance / 1609.34).toFixed(2),
+          moving_time,
+          average_speed:
+            Math.floor(distance / average_speed / 60 / distance / 1609.34) +
+            ":" +
+            String(
+              Math.floor(
+                ((distance / average_speed / 60 / (distance / 1609.34)) % 1) *
+                  60
+              )
+            ).padStart(2, "0"),
+          max_speed,
+          total_elevation_gain,
+          start_date,
+        })
+      );
+
+    if (!newMessageParams) {
+      set({
+        MessageParams: [
+          {
+            role: "system",
+            content:
+              "You are a professional running coach. Speak in an encouraging and knowledgeable tone, provide structured training plans, pace advice, and your primary concern is injury prevention",
+          },
+          {
+            role: "user",
+            content: `Here is data about my runs for the past month ${filteredActivities} give me about a paragraph with insights into how my training is looking and include bullet points at the bottom of my average distance and pace.`,
+          },
+        ],
+      });
+    } else {
+      addMessage(newMessageParams);
+    }
+
     try {
-      const newRes = await getCompletion(activities);
+      console.log("store 268", MessageParams);
+      const newRes = await getCompletion(MessageParams);
 
       // Set the activities data
       if (!newRes || newRes.length == 0) {
