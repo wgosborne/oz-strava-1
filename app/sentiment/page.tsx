@@ -52,27 +52,29 @@ export default function Page() {
   }
 
   if (error) {
-    return (
-      <div>
-        Error: {error} <br />
-        Check that LM Studio is running
-      </div>
-    );
+    console.log(`Error: ${error}`);
+    console.log("Check that LM Studio is running");
+    // return (
+    //   <div>
+    //     Error: {error} <br />
+    //     Check that LM Studio is running
+    //   </div>
+    // );
   }
 
   // if (!quotes) {
   //   return <div>Loading now...</div>; // Prevent rendering before data is available
   // }
 
-  if (!LMResponse) {
-    return (
-      <div>
-        No Response From LM Studio, try turning the LM Studio status to running.
-        If already running, please wait for the responde, could take up to a
-        minute
-      </div>
-    ); // Prevent rendering before data is available
-  }
+  // if (!LMResponse) {
+  //   return (
+  //     <div>
+  //       No Response From LM Studio, try turning the LM Studio status to running.
+  //       If already running, please wait for the responde, could take up to a
+  //       minute
+  //     </div>
+  //   ); // Prevent rendering before data is available
+  // }
 
   return (
     <div className="p-4">
@@ -100,12 +102,13 @@ export default function Page() {
             <br></br>
             <div className="">
               <Textarea
+                id="UserResponse"
                 className="w-full"
                 placeholder="Type your message here."
               />
             </div>
             <div className="py-3 float-right pr-5">
-              <Button>Send</Button>
+              <Button onClick={SendResponse}>Send</Button>
             </div>
           </div>
         </TabsContent>
@@ -114,6 +117,10 @@ export default function Page() {
     </div>
   );
 }
+
+const SendResponse = () => {
+  const text = document.getElementById("UserResponse").value.trim();
+};
 
 // const getSentiment = (str: string) => {
 //   //add spell check and stop word check?

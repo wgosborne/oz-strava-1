@@ -72,7 +72,7 @@ export const getCompletion = async (activities: any[]) => {
   } catch (err: any) {
     if (err.response) {
       // Received a response from server with an error code
-      console.error("LM Studio returned an error:", err.response.data);
+      //console.error("LM Studio returned an error:", err.response.data);
       return {
         error:
           err.response.data?.error || "LM Studio returned an error response.",
@@ -80,7 +80,7 @@ export const getCompletion = async (activities: any[]) => {
       };
     } else if (err.request) {
       // Request was made but no response received
-      console.error("No response from LM Studio:", err.message);
+      //console.error("No response from LM Studio:", err.message);
       return {
         error: "No response from LM Studio. Is it running?",
         details: err.message,
