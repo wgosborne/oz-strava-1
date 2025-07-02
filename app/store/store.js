@@ -261,6 +261,7 @@ export const useStore = create((set) => ({
         ],
       });
     } else {
+      const addMessage = useStore.getState().addMessage;
       addMessage(newMessageParams);
     }
 

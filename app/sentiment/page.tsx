@@ -63,7 +63,12 @@ export default function Page() {
       content: `${text}. Respond in 200 words.`,
     };
     fetchLMResponse(activities, newMessageParams);
-    textarea.value = "";
+    const textarea = document.getElementById(
+      "UserResponse"
+    ) as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.value = "";
+    }
   };
 
   if (isLoading) {
