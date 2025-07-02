@@ -36,11 +36,14 @@ export default function Page() {
   const addMessage = useStore((state) => state.addMessage);
   const MessageParams = useStore((state) => state.MessageParams);
 
+  let LoadingMessage = "Analysis";
+
   useEffect(() => {
     console.log(LMResponse);
     //fetchQuotes();
     if (LMResponse.length == 0) {
       fetchLMResponse(activities, "");
+      LoadingMessage = "Loading message from LM Studio...";
     }
   }, [fetchQuotes, fetchLMResponse, activities]);
 
@@ -64,7 +67,7 @@ export default function Page() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    LoadingMessage = "Loading message from LM Studio...";
   }
 
   if (error) {
@@ -107,7 +110,7 @@ export default function Page() {
                   Chat with Coach
                 </CardTitle>
                 <CardDescription className="text-wrap break-words text-sm line-clamp-6">
-                  Analysis
+                  {LoadingMessage}
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-md">{LMResponse}</CardContent>

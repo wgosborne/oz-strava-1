@@ -246,7 +246,7 @@ export const useStore = create((set) => ({
         })
       );
 
-    if (!newMessageParams) {
+    if (!newMessageParams || newMessageParams.length == 0) {
       set({
         MessageParams: [
           {
@@ -265,6 +265,7 @@ export const useStore = create((set) => ({
     }
 
     try {
+      const MessageParams = useStore.getState().MessageParams;
       console.log("store 268", MessageParams);
       const newRes = await getCompletion(MessageParams);
 
@@ -274,11 +275,10 @@ export const useStore = create((set) => ({
       } else {
         console.log(newRes);
         set({ LMResponse: newRes.choices[0].message.content });
+        set({
+          isLoading: false,
+        });
       }
-
-      set({
-        isLoading: false,
-      });
     } catch (err) {
       // Handle any errors
       set({ isLoading: false, error: err.message });
