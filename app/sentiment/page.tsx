@@ -60,7 +60,7 @@ export default function Page() {
     console.log(text);
     const newMessageParams = {
       role: "user",
-      content: `${text}. Respond in 200 words.`,
+      content: `${text}. Please answer me as directly and accurately as possible. Keep it short and to the point.`,
     };
     fetchLMResponse(activities, newMessageParams);
     const textarea = document.getElementById(
@@ -72,7 +72,7 @@ export default function Page() {
   };
 
   if (isLoading) {
-    LoadingMessage = "Loading message from LM Studio...";
+    LoadingMessage = ``;
   }
 
   if (error) {
@@ -109,16 +109,65 @@ export default function Page() {
         </TabsList>
         <TabsContent value="chat">
           <div className="items-center space-x-">
-            <Card className="h-[310px] w-full flex flex-col justify-between">
+            <Card className="w-full max-h-[500px] overflow-y-auto flex flex-col justify-between">
               <CardHeader className="overflow-hidden">
                 <CardTitle className="text-wrap break-words text-base">
                   Chat with Coach
                 </CardTitle>
                 <CardDescription className="text-wrap break-words text-sm line-clamp-6">
-                  {LoadingMessage}
+                  <span>{LoadingMessage}</span>
                 </CardDescription>
               </CardHeader>
-              <CardContent className="text-md">{LMResponse}</CardContent>
+              <CardContent className="text-md space-y-2">
+                {isLoading ? (
+                  <div className="flex justify-center">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent" />
+                  </div>
+                ) : (
+                  (() => {
+                    const lines = LMResponse.split("\n");
+                    const bullets: string[] = [];
+                    const paragraphs: JSX.Element[] = [];
+
+                    lines.forEach((line, idx) => {
+                      if (line.trim().startsWith("-")) {
+                        bullets.push(line.replace(/^-/, "").trim());
+                      } else {
+                        if (bullets.length > 0) {
+                          paragraphs.push(
+                            <ul
+                              key={`ul-${idx}`}
+                              className="ml-6 list-disc space-y-1"
+                            >
+                              {bullets.map((b, i) => (
+                                <li key={`bullet-${i}`}>{b}</li>
+                              ))}
+                            </ul>
+                          );
+                          bullets.length = 0;
+                        }
+                        if (line.trim()) {
+                          paragraphs.push(<p key={`p-${idx}`}>{line}</p>);
+                        }
+                      }
+                    });
+
+                    // If any bullets are left at the end
+                    if (bullets.length > 0) {
+                      paragraphs.push(
+                        <ul key="ul-end" className="ml-6 list-disc space-y-1">
+                          {bullets.map((b, i) => (
+                            <li key={`bullet-end-${i}`}>{b}</li>
+                          ))}
+                        </ul>
+                      );
+                    }
+
+                    return paragraphs;
+                  })()
+                )}
+              </CardContent>
+
               <CardFooter className="flex justify-between text-sm">
                 Footer
               </CardFooter>
