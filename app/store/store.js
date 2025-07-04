@@ -2,6 +2,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import { getAllActivities } from "../actions/getActivities";
+import { getGear } from "../actions/getGear";
 import { getAllComments } from "../actions/getComments";
 import { getAllQuotes } from "../actions/getAllComments";
 import { getAllTweets } from "../actions/getAllTweets";
@@ -32,6 +33,7 @@ export const useStore = create((set) => ({
   comments: [],
   quotes: [],
   tweets: [],
+  gear: [],
   LMResponse: "",
   MessageParams: [],
   setMessageParams: (value) => set({ MessageParams: value }),
@@ -113,6 +115,31 @@ export const useStore = create((set) => ({
         totalDistance: thisTotalDistance.toFixed(2),
         isLoading: false,
       });
+    } catch (err) {
+      // Handle any errors
+      set({ isLoading: false, error: err.message });
+    }
+  },
+
+  // Action to fetch gear info
+  fetchGear: async () => {
+    set({ isLoading: true, error: null }); // Start loading and clear any previous errors
+    try {
+      const activities = useStore.getState().activities;
+
+      let gearIDs = [];
+      gearIDs = [
+        ...new Set(
+          activities
+            .filter((activity) => activity.gear_id)
+            .map((activity) => activity.gear_id)
+        ),
+      ];
+
+      const allGear = await getGear(gearIDs);
+
+      // Set the gear data
+      set({ gear: allGear, isLoading: false });
     } catch (err) {
       // Handle any errors
       set({ isLoading: false, error: err.message });
