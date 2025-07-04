@@ -21,13 +21,17 @@ export default function Page() {
   const isLoading = useStore((state) => state.isLoading);
   const gear = useStore((state) => state.gear);
   const fetchGear = useStore((state) => state.fetchGear);
+  const fetchGearFromStrava = useStore((state) => state.fetchGearFromStrava);
+  const syncGear = useStore((state) => state.syncGear);
 
   useEffect(() => {
     fetchGear();
+    //fetchGearFromStrava();
   }, [fetchGear]);
 
   useEffect(() => {
     console.log("GEAR", gear);
+    //syncGear(gear);
   }, [gear]);
 
   if (isLoading) {
@@ -59,9 +63,7 @@ export default function Page() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="text-sm"></CardContent>
-                <CardFooter className="flex justify-between text-sm">
-                  Kudos:&nbsp;{item.id}
-                </CardFooter>
+                <CardFooter className="flex justify-between text-sm"></CardFooter>
               </Card>
             ))}
           </div>

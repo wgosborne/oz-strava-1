@@ -57,6 +57,17 @@ export const useStore = create((set) => ({
       set({ isLoading: false, error: err.message });
     }
   },
+  syncGear: async (gear) => {
+    set({ isLoading: true, error: null }); // Start loading and clear any previous errors
+    try {
+      axios.post("/api/refreshGear", { gear });
+
+      set({ isLoading: false });
+    } catch (err) {
+      // Handle any errors
+      set({ isLoading: false, error: err.message });
+    }
+  },
   fetchActivitiesFromStrava: async () => {
     set({ isLoading: true, error: null }); // Start loading and clear any previous errors
     try {
@@ -121,8 +132,24 @@ export const useStore = create((set) => ({
     }
   },
 
-  // Action to fetch gear info
+  // Action to fetch gear info from database
   fetchGear: async () => {
+    set({ isLoading: true, error: null }); // Start loading and clear any previous errors
+    try {
+      const deebGear = await axios.get("/api/deebGear");
+
+      const allGear = deebGear.data;
+
+      // Set the gear data
+      set({ gear: allGear, isLoading: false });
+    } catch (err) {
+      // Handle any errors
+      set({ isLoading: false, error: err.message });
+    }
+  },
+
+  //getting gear from strava
+  fetchGearFromStrava: async () => {
     set({ isLoading: true, error: null }); // Start loading and clear any previous errors
     try {
       const activities = useStore.getState().activities;
