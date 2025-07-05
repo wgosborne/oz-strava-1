@@ -26,8 +26,8 @@ export const getGear = async (gearIds: any[]) => {
           err
         );
       }
-      return gearArray;
     }
+    return gearArray;
   } catch (err) {
     console.error("Error getting detailed activity for gear: ", err);
   }

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import Image from "next/image";
 
 export default function Page() {
   const activities = useStore((state) => state.activities);
@@ -27,12 +28,12 @@ export default function Page() {
   useEffect(() => {
     fetchGear();
     //fetchGearFromStrava();
-  }, [fetchGear]);
+  }, []);
 
   useEffect(() => {
     console.log("GEAR", gear);
     //syncGear(gear);
-  }, [gear]);
+  }, [gear, syncGear]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -40,6 +41,10 @@ export default function Page() {
 
   if (error) {
     return <div>Error: {error}</div>;
+  }
+
+  if (gear.length === 0) {
+    return <div>Loading now...</div>; // Prevent rendering before data is available
   }
 
   return (
@@ -62,7 +67,13 @@ export default function Page() {
                     {item.id}
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="text-sm"></CardContent>
+                <CardContent className="text-sm">
+                  <Image
+                    src={gear.image_path}
+                    alt={gear.name || "Gear image"}
+                    className="w-full h-auto object-cover rounded"
+                  />
+                </CardContent>
                 <CardFooter className="flex justify-between text-sm"></CardFooter>
               </Card>
             ))}

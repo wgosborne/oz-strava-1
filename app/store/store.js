@@ -157,13 +157,15 @@ export const useStore = create((set) => ({
       let gearIDs = [];
       gearIDs = [
         ...new Set(
-          activities
-            .filter((activity) => activity.gear_id)
-            .map((activity) => activity.gear_id)
+          activities.map((activity) => activity.gear_id).filter((id) => id) // removes null/undefined/empty
         ),
       ];
 
+      console.log("store js ids", gearIDs);
+
       const allGear = await getGear(gearIDs);
+
+      console.log("store js", allGear);
 
       // Set the gear data
       set({ gear: allGear, isLoading: false });
