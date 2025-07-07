@@ -10,42 +10,45 @@ export const getAllActivities = async () => {
       {
         params: {
           access_token: access_token,
-          after: 1751184000, //Unix for june 20th
-          per_page: 20,
+          // after: 1732679568,
+          // before: 1733704855,
+          per_page: 100,
         },
       }
     );
 
     const activities = response.data;
-    const activitiesWithNotes = [];
 
-    //getting description
-    for (const activity of activities) {
-      try {
-        const detailedActivityResponse = await axios.get(
-          `https://www.strava.com/api/v3/activities/${activity.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${access_token}`,
-            },
-          }
-        );
-        const detailedActivity = detailedActivityResponse.data;
-        activitiesWithNotes.push({
-          ...activity, // Include existing activity data
-          description: detailedActivity.description || "", // Add the notes
-        });
-      } catch (err) {
-        console.error(
-          `Error getting detailed activity for ${activity.id}:`,
-          err
-        );
+    return activities;
+    //const activitiesWithNotes = [];
 
-        activitiesWithNotes.push(activity);
-      }
-    }
+    // //getting description
+    // for (const activity of activities) {
+    //   try {
+    //     const detailedActivityResponse = await axios.get(
+    //       `https://www.strava.com/api/v3/activities/${activity.id}`,
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${access_token}`,
+    //         },
+    //       }
+    //     );
+    //     const detailedActivity = detailedActivityResponse.data;
+    //     activitiesWithNotes.push({
+    //       ...activity, // Include existing activity data
+    //       description: detailedActivity.description || "", // Add the notes
+    //     });
+    //   } catch (err) {
+    //     console.error(
+    //       `Error getting detailed activity for ${activity.id}:`,
+    //       err
+    //     );
 
-    return activitiesWithNotes;
+    //     activitiesWithNotes.push(activity);
+    //   }
+    // }
+
+    // return activitiesWithNotes;
   } catch (err) {
     console.error("Error getting all activities:", err);
   }
