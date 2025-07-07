@@ -28,10 +28,13 @@ export default function Page() {
   useEffect(() => {
     fetchGear();
     //fetchGearFromStrava();
-  }, []);
+  }, [fetchGear]);
 
   useEffect(() => {
     console.log("GEAR", gear);
+    gear.forEach((item) => {
+      console.log(item.image_path);
+    });
     //syncGear(gear);
   }, [gear, syncGear]);
 
@@ -56,7 +59,7 @@ export default function Page() {
           <div className="w-full row-start-2 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {gear.map((item: any) => (
               <Card
-                key={item.id}
+                key={item.gear_id}
                 className="h-[310px] w-full flex flex-col justify-between"
               >
                 <CardHeader className="overflow-hidden">
@@ -64,13 +67,15 @@ export default function Page() {
                     {item.name}
                   </CardTitle>
                   <CardDescription className="text-wrap break-words text-sm line-clamp-6">
-                    {item.id}
+                    {item.gear_id}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="text-sm">
                   <Image
-                    src={gear.image_path}
-                    alt={gear.name || "Gear image"}
+                    src={item.image_path}
+                    alt={item.name || "Gear image"}
+                    width={300}
+                    height={200}
                     className="w-full h-auto object-cover rounded"
                   />
                 </CardContent>
