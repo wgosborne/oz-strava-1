@@ -10,9 +10,9 @@ export const getAllActivities = async () => {
       {
         params: {
           access_token: access_token,
-          // after: 1732679568,
+          after: 1751338683,
           // before: 1733704855,
-          per_page: 100,
+          per_page: 25,
         },
       }
     );
@@ -20,7 +20,7 @@ export const getAllActivities = async () => {
     const activities = response.data;
 
     return activities;
-    //const activitiesWithNotes = [];
+    // const activitiesWithNotes = [];
 
     // //getting description
     // for (const activity of activities) {
