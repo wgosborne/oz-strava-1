@@ -10,9 +10,9 @@ export const getAllActivities = async () => {
       {
         params: {
           access_token: access_token,
-          after: 1755993600, //aug 24th
-          // before: 1733704855,
-          per_page: 20,
+          after: 1761300309,
+          //before: 1761356724,
+          per_page: 99,
         },
       }
     );
