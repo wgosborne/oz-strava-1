@@ -28,11 +28,11 @@ export default function CoachChat({ activities }: CoachChatProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    // Only fetch if we don't have a response yet
-    if (LMResponse.length === 0 && activities.length > 0) {
+    // Only fetch if we don't have a response yet and no error
+    if (LMResponse.length === 0 && activities.length > 0 && !error) {
       fetchLMResponse(activities, "");
     }
-  }, [fetchLMResponse, activities, LMResponse.length]);
+  }, [fetchLMResponse, activities, LMResponse.length, error]);
 
   useEffect(() => {
     // Add assistant response to message history
@@ -43,7 +43,7 @@ export default function CoachChat({ activities }: CoachChatProps) {
 
   const handleSendResponse = () => {
     const text = textareaRef.current?.value.trim();
-    if (!text) return;
+    if (!text || error) return; // Don't send if there's an error
 
     const newMessageParams = {
       role: "user" as const,
@@ -56,11 +56,6 @@ export default function CoachChat({ activities }: CoachChatProps) {
       textareaRef.current.value = "";
     }
   };
-
-  if (error) {
-    console.log(`Error: ${error}`);
-    console.log("Check that LM Studio is running");
-  }
 
   const renderResponse = () => {
     if (!LMResponse) return null;
@@ -104,11 +99,39 @@ export default function CoachChat({ activities }: CoachChatProps) {
   };
 
   return (
-    <Tabs defaultValue="chat">
-      <TabsList>
-        <TabsTrigger value="chat">Chat</TabsTrigger>
-        <TabsTrigger value="plan">Plan</TabsTrigger>
-      </TabsList>
+    <div>
+      {error && (
+        <div className="mb-4 rounded-lg bg-red-50 border border-red-400 p-4">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <svg
+                className="h-5 w-5 text-red-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">
+                LM Studio is not running
+              </h3>
+              <div className="mt-2 text-sm text-red-700">
+                <p>{error}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <Tabs defaultValue="chat">
+        <TabsList>
+          <TabsTrigger value="chat">Chat</TabsTrigger>
+          <TabsTrigger value="plan">Plan</TabsTrigger>
+        </TabsList>
       <TabsContent value="chat">
         <div className="items-center">
           <Card className="w-full max-h-[500px] overflow-y-auto flex flex-col justify-between">
@@ -144,7 +167,7 @@ export default function CoachChat({ activities }: CoachChatProps) {
             />
           </div>
           <div className="py-3 float-right pr-5">
-            <Button onClick={handleSendResponse} disabled={isLoading}>
+            <Button onClick={handleSendResponse} disabled={isLoading || !!error}>
               {isLoading ? "Sending..." : "Send"}
             </Button>
           </div>
@@ -152,5 +175,6 @@ export default function CoachChat({ activities }: CoachChatProps) {
       </TabsContent>
       <TabsContent value="plan">Plan goes here.</TabsContent>
     </Tabs>
+    </div>
   );
 }

@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error('LM Studio Proxy Error:', error);
     return NextResponse.json(
-      { error: 'Failed to connect to LM StudioIs it running?', details: error.message },
+      { error: 'Failed to connect to LM Studio. Is it running?', details: error.message },
       { status: 500 }
     );
   }
