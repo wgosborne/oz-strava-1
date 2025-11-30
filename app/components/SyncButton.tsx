@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { syncFromStrava } from '@/app/actions/syncFromStrava';
+import { useState } from "react";
+import { syncFromStrava } from "@/app/actions/syncFromStrava";
 
 interface SyncResult {
   success: boolean;
@@ -13,12 +13,12 @@ interface SyncResult {
 export function SyncButton() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
-  const [syncMessage, setSyncMessage] = useState('');
+  const [syncMessage, setSyncMessage] = useState("");
   const [isError, setIsError] = useState(false);
 
   const handleSync = async () => {
     setIsSyncing(true);
-    setSyncMessage('');
+    setSyncMessage("");
     setIsError(false);
 
     try {
@@ -29,7 +29,8 @@ export function SyncButton() {
       );
       setIsError(false);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Sync failed';
+      const errorMessage =
+        error instanceof Error ? error.message : "Sync failed";
       setSyncMessage(`${errorMessage}`);
       setIsError(true);
     } finally {
@@ -39,13 +40,13 @@ export function SyncButton() {
 
   return (
     <div className="flex items-center gap-4 mb-6">
-      <button
+      {/* <button
         onClick={handleSync}
         disabled={isSyncing}
         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
       >
         {isSyncing ? 'Syncing...' : 'Sync from Strava'}
-      </button>
+      </button> */}
 
       {lastSyncTime && !syncMessage && (
         <span className="text-sm text-gray-600">
@@ -54,7 +55,11 @@ export function SyncButton() {
       )}
 
       {syncMessage && (
-        <span className={`text-sm font-medium ${isError ? 'text-red-600' : 'text-green-600'}`}>
+        <span
+          className={`text-sm font-medium ${
+            isError ? "text-red-600" : "text-green-600"
+          }`}
+        >
           {syncMessage}
         </span>
       )}
