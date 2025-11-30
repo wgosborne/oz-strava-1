@@ -1,38 +1,27 @@
-"use client";
-
-import React, { useEffect, useMemo } from "react";
-import { useStore } from "../store/store";
-import dynamic from "next/dynamic";
+import { getDb } from "@/lib/db";
+import { Activity } from "@/app/types/Activity";
 import Footer from "../components/Footer";
+import MapWrapper from "./MapWrapper";
 
-export default function Page() {
-  // Access the state and actions from the store
-  const { activities } = useStore();
-
-  const Map = useMemo(
-    () =>
-      dynamic(() => import("../components/Map"), {
-        loading: () => <p>A map is loading</p>,
-        ssr: false,
-      }),
-    []
+async function getActivities(): Promise<Activity[]> {
+  const db = await getDb();
+  const result = await db.request().query(
+    "SELECT * FROM activities ORDER BY start_date DESC"
   );
+  return result.recordset;
+}
 
-  useEffect(() => {
-    //console.log("ACTIVITIES", activities);
-  });
+export default async function Page() {
+  const activities = await getActivities();
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       {activities.length > 0 ? (
         <div className="w-full row-start-2 flex gap-6 flex-wrap items-center justify-center">
-          <Map
-            zoom={13} // Default zoom level
-            activities={activities}
-          />
+          <MapWrapper activities={activities} />
         </div>
       ) : (
-        <p>Loading activities...</p>
+        <p>No activities found. Try syncing from Strava.</p>
       )}
       <Footer />
     </div>
