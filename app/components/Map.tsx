@@ -11,7 +11,7 @@ import { LatLng } from "leaflet";
 
 interface Props {
   zoom: number;
-  activities: [];
+  activities: Activity[];
 }
 
 const Map = ({ zoom, activities }: Props) => {

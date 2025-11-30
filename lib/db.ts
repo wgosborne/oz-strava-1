@@ -1,10 +1,10 @@
 import sql from 'mssql';
 
-const config = {
-  user: process.env.DB_USER,  
-  password: process.env.DB_PASSWORD, 
-  server: process.env.DB_SERVER,    
-  database: process.env.DB_NAME, 
+const config: sql.config = {
+  user: process.env.DB_USER as string,
+  password: process.env.DB_PASSWORD as string,
+  server: process.env.DB_SERVER as string,
+  database: process.env.DB_NAME as string,
   options: {
     trustServerCertificate: true, // for local dev
   },
@@ -15,11 +15,12 @@ const config = {
   }
 };
 
-let pool: sql.ConnectionPool;
+let pool: sql.ConnectionPool | undefined;
 
-export async function getDb() {
+export async function getDb(): Promise<sql.ConnectionPool> {
   if (!pool) {
-    pool = await sql.connect(config);
+    pool = new sql.ConnectionPool(config);
+    await pool.connect();
   }
   return pool;
 }

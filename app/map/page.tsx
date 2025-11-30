@@ -3,6 +3,8 @@ import { Activity } from "@/app/types/Activity";
 import Footer from "../components/Footer";
 import MapWrapper from "./MapWrapper";
 
+export const dynamic = 'force-dynamic';
+
 async function getActivities(): Promise<Activity[]> {
   const db = await getDb();
   const result = await db.request().query(

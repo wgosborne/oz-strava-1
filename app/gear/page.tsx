@@ -1,6 +1,8 @@
 import { getDb } from "@/lib/db";
 import GearList from "./GearList";
 
+export const dynamic = 'force-dynamic';
+
 interface GearItem {
   gear_id: string;
   name: string;

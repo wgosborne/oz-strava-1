@@ -4,6 +4,8 @@ import ActivityList from "./components/ActivityList";
 import Footer from "./components/Footer";
 import { SyncButton } from "./components/SyncButton";
 
+export const dynamic = 'force-dynamic';
+
 async function getActivities(): Promise<Activity[]> {
   const db = await getDb();
   const result = await db.request().query(

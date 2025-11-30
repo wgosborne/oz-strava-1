@@ -5,7 +5,12 @@
 
 import axios from "axios";
 
-export const getCompletion = async (MessageParams: []) => {
+interface ChatMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+export const getCompletion = async (MessageParams: ChatMessage[]) => {
   console.log(MessageParams);
   try {
     const response = await axios.post("/api/lmstudio", {

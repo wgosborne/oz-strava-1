@@ -2,6 +2,8 @@ import { getDb } from "@/lib/db";
 import { Activity } from "@/app/types/Activity";
 import StatsChart from "./StatsChart";
 
+export const dynamic = 'force-dynamic';
+
 interface ChartDataItem {
   title: string;
   distance: number;

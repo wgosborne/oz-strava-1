@@ -62,7 +62,7 @@ export default function CoachChat({ activities }: CoachChatProps) {
 
     const lines = LMResponse.split("\n");
     const bullets: string[] = [];
-    const paragraphs: JSX.Element[] = [];
+    const paragraphs: React.JSX.Element[] = [];
 
     lines.forEach((line, idx) => {
       if (line.trim().startsWith("-")) {

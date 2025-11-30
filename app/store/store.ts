@@ -113,7 +113,7 @@ export const useStore = create<Store>((set, get) => ({
       });
 
     // Initialize or update message params
-    if (!newMessageParams || newMessageParams === "") {
+    if (!newMessageParams || typeof newMessageParams === "string") {
       set({
         MessageParams: [
           {
