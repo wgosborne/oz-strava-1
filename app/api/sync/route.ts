@@ -142,9 +142,10 @@ async function upsertActivities(
       end_latlng,
       description,
       athlete: { id: athlete_id } = { id: null },
-      map: { summary_polyline } = { summary_polyline: null },
+      map,
     } = activity;
 
+    const summary_polyline = map?.summary_polyline || null;
     const [start_lat, start_lng] = start_latlng || [null, null];
     const [end_lat, end_lng] = end_latlng || [null, null];
 
