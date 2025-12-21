@@ -40,13 +40,13 @@ export function SyncButton() {
 
   return (
     <div className="flex items-center gap-4 mb-6">
-      {/* <button
+      <button
         onClick={handleSync}
         disabled={isSyncing}
         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
       >
-        {isSyncing ? 'Syncing...' : 'Sync from Strava'}
-      </button> */}
+        {isSyncing ? "Syncing..." : "Sync from Strava"}
+      </button>
 
       {lastSyncTime && !syncMessage && (
         <span className="text-sm text-gray-600">
